@@ -1,2 +1,83 @@
 \section{Problem 3}
 \textit{Süli-Mayers: Ex. 1.8, 2.8, 4.8}
+
+\subsection{Exercise 1.8}
+\textit{Suppose that the function $f$ has a continuous second derivative, that $f(\xi) = 0$, and that in the interval $[X, \xi]$, with $X < \xi$, $f'(x) > 0$ and $f''(x) < 0$. Show that the Newton iteration, starting from any $x_0$ in $[X, \xi]$, converges to $\xi$.}
+
+As $f'(x) > 0$ for all $x \in [X, \xi]$, $f$ must be absolutely monotonically increasing over the interval. As $f(\xi) = 0$, this means that $f(x_0) < 0$ for all $x_0 \in [X, \xi)$.
+
+The Newton iteration states that $x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$. For $x_0 = \xi$, observe that $f(\xi) = 0$, thus $f(x_0) = 0$, thus
+\begin{equation*}
+    x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)} = x_n 
+\end{equation*}
+\begin{equation*}
+    \lim_{n\to\infty} x_n = x_0 = \xi
+\end{equation*}
+
+As $f(x_n) < 0$ and $f'(x_n) > 0$ for all $x_n \in [X, \xi]$, we have that $\frac{f(x_n)}{f'(x_n)} < 0$ for all $x_n \in [X, \xi)$. This means that, for $x_n \in [X, \xi)$:
+\begin{align*}
+    x_{n+1} &= x_n - \frac{f(x_n)}{f'(x_n)} \\
+        &= x_n + \abs{\frac{f(x_n)}{f'(x_n)}} > x_n
+\end{align*}
+This means that for $x_0 \in [X, \xi)$:
+\begin{equation*}
+    \lim_{n\to\infty} x_n = \xi
+\end{equation*}
+
+As $\lim_{n\to\infty} x_n = \xi$ for both $x_0 = \xi$ and $x_0 \in [X, \xi)$, it follows that
+\begin{equation*}
+    \lim_{n\to\infty} x_n = \xi
+\end{equation*}
+for all $x_0 \in [X, \xi]$, and that the Newton iteration converges to $\xi$ for any $x_0 \in [X, \xi]$.
+
+
+\pagebreak
+\subsection{Exercise 2.8}
+\textit{(i) Show that, for any vector $\mathbf{v} = (v_1, ..., v_n)^T \in \mathbb{R}^n$, $\norm{\mathbf{v}}_\infty \le \norm{\mathbf{v}}_2$ and $\norm{\mathbf{v}}_2^2 \le \norm{\mathbf{v}}_1 \norm{\mathbf{v}}_\infty$.}
+
+\textit{In each case give an example of a nonzero vector $\mathbf{v}$ for which equality is attained. Deduce that $\norm{\mathbf{v}}_\infty \le \norm{\mathbf{v}}_2 \le \norm{\mathbf{v}}_1$. Show also that $\norm{\mathbf{v}}_2 \le \sqrt{n}\norm{\mathbf{v}}_\infty$.}
+
+Observe that 
+\begin{equation*}
+    \norm{v}_\infty = \max_i \abs{v_i} \ge v_i \; \forall i,
+\end{equation*}
+thus
+\begin{equation*}
+    \norm{v}_2 = \sqrt{\sum_{i=1}^n \abs{v_i}^2} \le \sqrt{\sum_{i=1}^n \norm{v}_\infty^2} = \sqrt{n\norm{v}_\infty^2} = \sqrt{n}\norm{v}_\infty
+\end{equation*}
+and
+\begin{equation*}
+    \norm{v}_\infty = \sqrt{(\max_i \abs{v_i})^2} \le \sqrt{\sum_{i=1}^n \abs{v_i}^2} = \norm{v}_2
+\end{equation*}
+
+If $n = 1$, then $v_i = \norm{v}_\infty \; \forall i$, giving $\norm{v}_2 = \sqrt{n}\norm{v}_\infty$. It follows that $\norm{v}_2 = \sqrt{1}\norm{v}_\infty = \norm{v}_\infty$, thus any vector with length 1 (such as $v = (\pi)$) is an example where equality is attained. This is proven as $\norm{(\pi)}_\infty = max([\pi]) = \pi$, and $\norm{(\pi)}_2 = \sqrt{\pi^2} = \pi$.
+
+If $n > 1$, let $j$ be the index there $v_j = \max_i \abs{v_i}$. It then follows that $(\max_i \abs{v_i})^2 = \abs{v_j}^2 < \sum_{i=1}^n \abs{v_i}^2$ (as $\sum_{i=1}^n \abs{v_i}^2 = \abs{v_j}^2 + \sum_{i \ne j} \abs{v_i}^2$), thus inequality is attained and $\norm{v}_\infty \le \norm{v}_2$ for all vectors $v \in \mathbb{R}^n$.
+
+Observe that
+\begin{align*}
+    \norm{v}_2^2 = \sqrt{\sum_{i=1}^n \abs{v_i}^2}^2 = \sum_{i=1}^n \abs{v_i}^2 &\le \sum_{i=1}^n \abs{v_i} \max_i \abs{v_i} \\
+    &= \sum_{i=1}^n \abs{v_i} \norm{v}_\infty = n \norm{v}_\infty \sum_{i=1}^n \abs{v_i} = n \norm{v}_\infty \norm{v}_1
+\end{align*}
+
+If $\norm{v}_\infty = v_i \; \forall i$, then it follows that $\norm{v}_2^2 = \norm{v}_1 \norm{v}_\infty$, thus any vector where this is true (such as any vector with length 1, such as $v = (\pi)$) is an example where equality is attained. This is proven as $\norm{(\pi)}_2^2 = \sqrt{\pi^2}^2 = \pi^2$, and $\norm{(\pi)}_1 * \norm{(\pi)}_\infty = \pi * \pi = \pi^2$.
+
+If $\norm{v}_\infty > v_i$ for any $i$, then it follows that $\norm{v}_2^2 < \norm{v}_1 \norm{v}_\infty$. This can be proven by the vector $v = (1, 2)$, where $\norm{v}_2^2 = \sqrt{1 + 4}^2 = 5$, and $\norm{v}_1 * \norm{v}_\infty = (1 + 2) * 2 = 6$.
+
+It follows from this that $\norm{v}_2^2 \le \norm{v}_1 \norm{v}_\infty$ for all vectors $v \in \mathbb{R}^n$.
+
+As $\norm{v}_\infty > 0$ and $\norm{v}_2 \ge \norm{v}_\infty$, we have that
+\begin{equation*}
+    \norm{v}_2 = \frac{\norm{v}_2^2}{\norm{v}_2} \le \frac{\norm{v}_1 \norm{v}_\infty}{\norm{v}_2} \le \frac{\norm{v}_1 \norm{v}_\infty}{\norm{v}_\infty} = \norm{v}_1
+\end{equation*}
+Combining this with the earlier answer, it follows that 
+\begin{equation*}
+    \norm{v}_\infty \le \norm{v}_2 \le \norm{v}_1
+\end{equation*}
+
+
+\pagebreak
+\textit{(ii) Show that, for any matrix $A \in \mathbb{R}^{m*n}$, $\norm{A}_\infty \le \sqrt{n}\norm{A}_2$ and $\norm{A}_2 \le \sqrt{m} \norm{A}_\infty$.}
+
+\textit{In each case give an example of a matrix $A$ for which equality is attained.}
+
