@@ -81,3 +81,151 @@ Combining this with the earlier answer, it follows that
 
 \textit{In each case give an example of a matrix $A$ for which equality is attained.}
 
+Observe that 
+\begin{equation*}
+    \norm{A}_\infty = \max_{i=1}^n \sum_{j=1}^m \abs{a_{ij}}
+\end{equation*}
+i.e. $\norm{A}_\infty$ is the maximum row-sum in the matrix. Let $A_k$ be the row which satisfies
+\begin{equation*}
+    \norm{A}_\infty = \max_{i=1}^n \sum_{j=1}^m \abs{a_{ij}} = \norm{A_k}_1
+\end{equation*}
+i.e. the row with the maximum row-sum in $A$. Then we have
+\begin{align*}
+    \norm{A}_\infty = \norm{A_k}_1 &\le \sqrt{n} \norm{A_k}_2 \\
+    &\le \sqrt{n} \sum_{i=1}^n \norm{A_i}_2 = \sqrt{n} \norm{A}_2
+\end{align*}
+where the first inequality was proven in \textit{(i)}, and the second follows from the fact that $\sum_{i=1}^n \norm{A_i}_2 = \norm{A_k}_2 + \sum_{i \ne k} \norm{A_i}_2$.
+
+Note that equality is attained when $A$ is a square matrix with $n = 1$, such as $A = \begin{bmatrix}2\end{bmatrix}$. In this case, $\norm{A}_\infty = \max (2) = 2$, and $\sqrt{n}\norm{A}_2 = 1 * 2 = 2$.
+
+---
+
+Definition 2.10 gives that
+\begin{equation*}
+    \norm{A} = \max_{x \in \mathbb{R}^n \setminus \{0\}} \frac{\norm{Ax}}{\norm{x}}
+\end{equation*}
+
+Combining this with the proofs found in \textit{(i)}, observe that
+\begin{align*}
+    \norm{A}_2 = \max_x \frac{\norm{Ax}_2}{\norm{x}_2} &\le \max_x \frac{\sqrt{m}\norm{Ax}_\infty}{\norm{x}_2} \\
+    &\le \max_x \frac{\sqrt{m}\norm{Ax}_\infty}{\norm{x}_\infty} = \sqrt{m} \norm{A}_\infty
+\end{align*}
+where the first inequality follows from $\norm{v}_2 \le \sqrt{n} \norm{v}_\infty$, as found in \textit{(i)}, and the second inequality follows from $\norm{v}_2 \ge \norm{v}_\infty$, also found in \textit{(i)}.
+
+Equality is attained, also here, when $A$ is a square matrix with $n = 1$, such as $A = \begin{bmatrix}2\end{bmatrix}$, where $\norm{A}_2 = 2$ and $\sqrt{m} \norm{A}_\infty = 2$.
+
+
+\pagebreak
+\subsection{Exercise 4.8}
+\textit{Suppose that $\xi = \lim_{k \to \infty} \mathbf{x}^{(k)}$ in $\mathbb{R}$. Following Definition 1.4, explain what is meant by saying that "the sequence $\mathbf{x}^{(k)}$ converges to $\xi$ linearly, with asymptotic rate $-\log_{10} \mu$", where $0 < \mu < 1$.}
+
+When a sequence $\mathbf{x}$ converges linearly to a constant $C$ with an asymptotic rate of $\gamma$, this means that the sequence satisfies the equation
+\begin{equation}
+    \lim_{k \to \infty} \frac{\abs{\mathbf{x}^{(k + 1)} - C}}{\abs{\mathbf{x}^{(k)} - C}} = \gamma
+\end{equation}
+In this case, the sequence $\mathbf{x}$ satisfies the following equation:
+\begin{equation*}
+    \lim_{k \to \infty} \frac{\abs{\mathbf{x}^{(k + 1)} - \xi}}{\abs{\mathbf{x}^{(k)} - \xi}} = \log_{10} \mu
+\end{equation*}
+
+
+\textit{Given the vector function $\mathbf{x} \mapsto \mathbf{f(x)}$ of two real variables $x_1$ and $x_2$ defined by $f_1(x_1, x_2) = x_1^2 + x_2^2 - 2$ and $f_2(x_1, x_2) = x_1 + x_2 - 2$, show that $\mathbf{f(\xi)} = \mathbf{0}$ when $\mathbf{\xi} = (1, 1)^T$.}
+
+\begin{align*}
+    \mathbf{f}(\xi) &= \mathbf{f}(1, 1)^T \\
+        &= (f_1(1, 1), f_2(1,1)) \\
+        &= (1 + 1 - 2, 1 + 1 - 2) = (0, 0) = \mathbf{0}
+\end{align*}
+
+\textit{Suppose that $x_1^{(0)} \ne x_2^{(0)}$; show that one iteration of Newton's method for the solution $\mathbf{f(x) = 0}$ with starting value $\mathbf{x}^{(0)} = (x_1^{(0)}, x_2^{(0)})^T$ then gives $\mathbf{x}^{(1)} = (x_1^{(1)}, x_2^{(1)})^T$ such that $x_1^{(1)} + x_2^{(1)} = 2$.}
+
+Newton's method states that $x^{(n + 1)} = x^{(n)} - J_f(\mathbf{x}^{(n)})^{-1} f(\mathbf{x}^{(n)})$, where $J_f(\mathbf{x}^{(n)})^{-1}$ is the inverse of the Jacobian matrix of f. We compute this as 
+\begin{align*}
+    J_f(\mathbf{x}^{(n)}) &=
+    \begin{bmatrix}
+        \frac{\partial f_1}{\partial x_1} & \frac{\partial f_1}{\partial x_2} \\
+        \frac{\partial f_2}{\partial x_1} & 
+        \frac{\partial f_2}{\partial x_2} \\
+    \end{bmatrix} \\
+    &= \begin{bmatrix}
+        2x_1 & 2x_2 \\
+        1 & 1 \\
+    \end{bmatrix} \\
+    &= \begin{bmatrix}
+        \frac{1}{2x_1 - 2x_2} & \frac{-x_2}{x_1 - x_2} \\
+        \frac{-1}{2x_1 - 2x_2} & \frac{x_1}{x_1 - x_2} \\
+    \end{bmatrix} \\
+\end{align*}
+
+It follows that
+\begin{align*}
+    \mathbf{x}^{(1)} &= \mathbf{x}^{(0)} - J_f(\mathbf{x}^{(0)})^{-1} f(\mathbf{x}^{(0)}) \\
+    &= (x_1^{(0)}, x_2^{(0)}) - \begin{bmatrix}
+        \frac{1}{2x_1 - 2x_2} & \frac{-x_2}{x_1 - x_2} \\
+        \frac{-1}{2x_1 - 2x_2} & \frac{x_1}{x_1 - x_2} \\
+    \end{bmatrix} * (x_1^2 + x_2^2 - 2, x_1 + x_2 - 2)^T \\
+    &= (x_1^{(0)}, x_2^{(0)}) - \begin{bmatrix}
+        \frac{x_1^2 + x_2^2 - 2}{2x_1 - 2x_2} + \frac{-(x_1x_2 + x_2^2 - 2x_1)}{x_1 - x_2} \\
+        \frac{-(x_1^2 + x_2^2 - 2)}{2x_1 - 2x_2} + \frac{x_1^2 + x_1x_2 - 2x_1}{x_1 - x_2} \\
+    \end{bmatrix} \\
+    &= (x_1^{(0)}, x_2^{(0)}) - \begin{bmatrix}
+        \frac{x_1^2 + x_2^2 - 2 - 2x_1x_2 - 2x_2^2 + 4x_1}{2x_1 - 2x_2} \\
+        \frac{-x_1^2 - x_2^2 + 2 + 2x_1^2 + 2x_1x_2 - 4x_1}{2x_1 - 2x_2} \\
+    \end{bmatrix} \\
+    &= (x_1^{(0)}, x_2^{(0)}) - \begin{bmatrix}
+        \frac{x_1^2 - x_2^2 - 2x_1x_2 + 4x_1  - 2}{2x_1 - 2x_2} \\
+        \frac{x_1^2 - x_2^2 + 2x_1x_2 - 4x_1  + 2}{2x_1 - 2x_2} \\
+    \end{bmatrix} \\
+    &= \begin{bmatrix}
+        x_1 - \frac{x_1^2 - x_2^2 - 2x_1x_2 + 4x_1  - 2}{2x_1 - 2x_2} \\
+        x_2 - \frac{x_1^2 - x_2^2 + 2x_1x_2 - 4x_1  + 2}{2x_1 - 2x_2} \\
+    \end{bmatrix} \\
+    &= \begin{bmatrix}
+        \frac{2x_1^2 - 2x_1x_2 - (x_1^2 - x_2^2 - 2x_1x_2 + 4x_1 - 2)}{2x_1 - 2x_2} \\
+        \frac{2x_1x_2 - 2x_2^2 - (x_1^2 - x_2^2 + 2x_1x_2 - 4x_1 + 2)}{2x_1 - 2x_2} \\
+    \end{bmatrix} \\
+    &= \begin{bmatrix}
+        \frac{x_1^2 + x_2^2 - 4x_1  + 2}{2x_1 - 2x_2} \\
+        \frac{-x_1^2 - x_2^2 + 4x_1  - 2}{2x_1 - 2x_2} \\
+    \end{bmatrix} \\
+\end{align*}
+
+It is clear to see that
+\begin{align*}
+    x_1^{(1)} + x_2^{(1)} &= \frac{x_1^2 + x_2^2 - 4x_1  + 2}{2x_1 - 2x_2} + \frac{-x_1^2 - x_2^2 + 4x_1  - 2}{2x_1 - 2x_2} \\
+    &= \frac{x_1^2 + x_2^2 - 4x_1  + 2 - x_1^2 - x_2^2 + 4x_1  - 2}{2x_1 - 2x_2} \\
+    &= \frac{0}{2x_1 - 2x_2} = 0
+\end{align*}
+
+\textit{This is a different result than what I was supposed to show, which is interesting. I have not succeeded in pinpointing exactly where I was wrong...}
+
+
+\textit{Determine $\mathbf{x}^{(1)}$ when $x_1^{(0)} = 1 + \alpha$, $x_2^{(0)} = 1 - \alpha$, where $\alpha \ne 0$. Assuming that $x_1^{(0)} \ne x_2^{(0)}$, deduce that Newton's method converges linearly to $(1, 1)^T$, with asymptotic rate of convergence $\log_{10}2$. Why is the convergence rate not quadratic?}
+
+\begin{align*}
+    \mathbf{x}^{(1)} &= \mathbf{x}^{(0)} - J_f(\mathbf{x}^{(0)})^{-1} f(\mathbf{x}^{(0)}) \\
+    &= (1 + \alpha, 1 - \alpha) - \begin{bmatrix}
+        \frac{1}{2 + 2\alpha - 2 + 2\alpha} & \frac{-1 + \alpha}{1 + \alpha - 1 + \alpha} \\
+        \frac{-1}{2 + 2\alpha - 2 + 2\alpha} & \frac{1 + \alpha}{1 + \alpha - 1 + \alpha} \\
+    \end{bmatrix} * (1 + 2\alpha + \alpha^2 + 1 - 2\alpha + \alpha^2 - 2, 1 + \alpha + 1 - \alpha - 2)^T \\
+    &= (1 + \alpha, 1 - \alpha) - \begin{bmatrix}
+        \frac{1}{4\alpha} & \frac{-1 + \alpha}{2\alpha} \\
+        \frac{-1}{4\alpha} & \frac{1 + \alpha}{2\alpha} \\
+    \end{bmatrix} * (2\alpha^2, 2\alpha)^T \\
+    &= (1 + \alpha, 1 - \alpha) - \begin{bmatrix}
+        \frac{\alpha}{2} -1 + \alpha \\
+        \frac{-\alpha}{2} + 1 + \alpha \\
+    \end{bmatrix} \\
+    &= (1 + \alpha - \frac{\alpha}{2} + 1 - \alpha, 1 - \alpha + \frac{\alpha}{2} - 1 - \alpha) \\
+    &= (2 - \frac{\alpha}{2}, - 2\alpha + \frac{\alpha}{2}) \\
+\end{align*}
+
+For the convergence rate to be quadratic, it would have to satisfy the following inequation:
+\begin{equation}
+    \lim_{k \to \infty} \frac{\abs{x^{(k + 1)} - (1, 1)^T}}{\abs{x^{(k)} - (1, 1)^T}^2} < C
+\end{equation}
+It does not, however, but it is easy to see that
+\begin{equation}
+    \lim_{k \to \infty} \frac{\abs{x^{(k + 1)} - (1, 1)^T}}{\abs{x^{(k)} - (1, 1)^T}} < \log_{10} 2,
+\end{equation}
+which gives a linear convergence to $(1, 1)^T$ with asymptotic rate of convergence $\log_{10} 2$.
