@@ -1,1 +1,204 @@
 \section{Problem 2}
+\textit{Consider the system}
+\begin{align*}
+    10x_1 - x_2 + 2x_3 &= 6 \\
+    -x_1 + 11x_2 - x_3 + 3x_4 &= 25 \\
+    2x_1 - x_2 - 10x_3 - x_4 &= -11 \\
+    3x_2 - x_3 + x_4 = 15 \\
+\end{align*}
+\textit{Find its exact solution. Write down the Jacobi iterative method and generate the first 3 entries, $x^{(1)}$, $x^{(2)}$, $x^{(3)}$ in the sequence of approximations $\left\{ x^{(n)} \right\}_ {n>0}, x^{(0)} = (0,0,0,0)^T$. Repeat the approximation using the Gauss-Seidel iterative method.}
+
+We start by finding the exact solution of the matrix form of the system:
+\begin{equation*}
+    \begin{bmatrix}
+        10 & -1 & 2 & 0 \\
+        -1 & 11 & -1 & 3 \\
+        2 & -1 & -10 & -1 \\
+        0 & 3 & -1 & 1 \\
+    \end{bmatrix}
+    \begin{bmatrix}
+        x_1 \\ x_2 \\ x_3 \\ x_4
+    \end{bmatrix}
+    = \begin{bmatrix}
+        6 \\ 25 \\ -11 \\ 15
+    \end{bmatrix}
+\end{equation*}
+
+\begin{equation*}
+    \begin{bmatrix}
+        -1 & 11 & -1 & 3 & 25\\
+        10 & -1 & 2 & 0 & 6\\
+        2 & -1 & -10 & -1 & -11\\
+        0 & 3 & -1 & 1 & 15\\
+    \end{bmatrix}
+\end{equation*}
+\begin{equation*}    
+    \begin{bmatrix}
+        1 & -11 & 1 & -3 & -25\\
+        0 & 109 & -8 & 30 & 256\\
+        0 & 21 & -12 & 5 & 39\\
+        0 & 3 & -1 & 1 & 15\\
+    \end{bmatrix} \\
+\end{equation*}
+\begin{equation*}
+    \begin{bmatrix}
+        1 & 0 & -8/3 & 2/3 & 30 \\
+        0 & 1 & -1/3 & 1/3 & 5 \\
+        0 & 0 & 85/3 & -19/3 & -289 \\
+        0 & 0 & -5 & -2 & -66 \\
+    \end{bmatrix} \\
+\end{equation*}
+\begin{equation*}
+    \begin{bmatrix}
+        1 & 0 & 0 & 26/15 & 326/5 \\
+        0 & 1 & 0 & 7/15 & 47/5 \\
+        0 & 0 & 1 & 2/5 & 66/5 \\
+        0 & 0 & 0 & -53/3 & -663 \\
+    \end{bmatrix} \\
+\end{equation*}
+\begin{equation*}
+    \begin{bmatrix}
+        1 & 0 & 0 & 0 & 8/53 \\
+        0 & 1 & 0 & 0 & -430/53 \\
+        0 & 0 & 1 & 0 & -96/53 \\
+        0 & 0 & 0 & 1 & 1989/53 \\
+    \end{bmatrix} \\
+\end{equation*}
+
+Which gives the exact solution
+\begin{align*}
+    x_1 &= 8 / 53 \\
+    x_2 &= -430 / 53 \\
+    x_3 &= -96 / 53 \\
+    x_4 &= 1989 / 53 \\
+\end{align*}
+
+
+\pagebreak
+
+\subsection{Jacobi iterative method}
+Let $b$ be the target vector $(6, 25, -11, 15)$, $D$ be the diagonal of the matrix form of the system and $L + U = $ matrix form $- D$. With the Jacobi iterative method, we have that
+\begin{align*}
+    x^{(k)} &= D^{-1} \left( b - (L + U)x^{(k-1)} \right) \\
+    x_i^{(k)} &= \frac{1}{a_{ii}} \left( b_i - \sum_{j \ne i} a_{ij}x_j^{(k-1)} \right) \\
+\end{align*}
+
+Remember that $x^{(0)} = (0, 0, 0, 0)^T$.
+
+\begin{equation*}
+    x^{(1)} = \begin{bmatrix}
+        \frac{1}{10} \left( 6 - (-1*0 + 2*0 + 0*0) \right) \\
+        \frac{1}{11} \left( 25 - (-1*0 - 1*0 + 3*0) \right) \\
+        \frac{1}{-10} \left( -11 - (2*0 - 1*0 - 1*0) \right) \\
+        1 \left( 15 - (0*0 + 3*0 - 1*0) \right) \\
+    \end{bmatrix}
+    = \begin{bmatrix}
+        6 / 10 \\
+        25 / 11 \\
+        11 / 10 \\
+        15 \\
+    \end{bmatrix}
+\end{equation*}
+
+
+\begin{equation*}
+    x^{(2)} = \begin{bmatrix}
+        \frac{1}{10} \left( 6 - (-1*25/11 + 2*11/10 + 0*15) \right) \\
+        \frac{1}{11} \left( 25 - (-1*6/10 - 1*11/10 + 3*15) \right) \\
+        \frac{1}{-10} \left( -11 - (2*6/10 - 1*25/11 - 1*15) \right) \\
+        1 \left( 15 - (0*6/10 + 3*25/11 - 1*11/10) \right) \\
+    \end{bmatrix}
+    = \begin{bmatrix}
+        334 / 550 \\
+        -183 / 110 \\
+        -279 / 550 \\
+        1021 / 110 \\
+    \end{bmatrix}
+\end{equation*}
+
+
+\begin{equation*}
+    x^{(3)} = \begin{bmatrix}
+        \frac{1}{10} \left( 6 - (-1*-183/110 + 2*-279/550 + 0*1021/110) \right) \\
+        \frac{1}{11} \left( 25 - (-1*334/550 - 1*-279/550 + 3*1021/110) \right) \\
+        \frac{1}{-10} \left( -11 - (2*334/550 - 1*-183/110 - 1*1021/110) \right) \\
+        1 \left( 15 - (0*334/550 + 3*-183/110 - 1*1021/110) \right) \\
+    \end{bmatrix}
+    = \begin{bmatrix}
+        2943 / 5500 \\
+        -151 / 605 \\
+        632 / 1375 \\
+        322 / 11 \\
+    \end{bmatrix}
+\end{equation*}
+
+
+
+\subsection{Gauss-Seidel iterative method}
+With the Gauss-Seidel iterative method, we have that
+\begin{equation*}
+    x_i^{(k)} = \frac{1}{a_{ii}} \left( b_i - \sum_{j=1}^{i-1} a_{ij}x_j^{(k)} - \sum_{j=i+1}^n a_{ij}x_j^{k-1} \right)
+\end{equation*}
+
+Remember that $x^{(0)} = (0, 0, 0, 0)^T$. Note that the Gauss-Seidel method computes each element $x_i^{(k)}$ one at a time, using the previously calculated elements for later calculations with the same $k$
+
+We can compute the general formula for $x^{(k)}$ ahead of time:
+\begin{equation*}
+    x^{(k)} = \begin{bmatrix}
+        \frac{1}{10} \left( 6 - (0) - (-1*x^{(k-1)}_2 + 2*x^{(k-1)}_3 + 0*x^{(k-1)}_4)) \right) \\
+        \frac{1}{11} \left( 25 - (-1*x^{(k)}_1) - (-1*x^{(k-1)}_3 + 3*x^{(k-1)}_4) \right) \\
+        \frac{1}{-10} \left( -11 - (2*x^{(k)}_1 - 1*x^{(k)}_2) - (1*x^{(k-1)}_4) \right) \\
+        1 \left( 15 - (0*x^{(k)}_1 + 3*x^{(k)}_2 - 1*x^{(k)}_3) \right) \\
+    \end{bmatrix}
+    = \begin{bmatrix}
+        \frac{1}{10} \left( 6 + x^{(k-1)}_2 - 2*x^{(k-1)}_3 \right) \\
+        \frac{1}{11} \left( 25 + x^{(k)}_1 + x^{(k-1)}_3 - 3*x^{(k-1)}_4 \right) \\
+        \frac{1}{-10} \left( -11 - 2*x^{(k)}_1 + x^{(k)}_2 + x^{(k-1)}_4 \right) \\
+        \left( 15 - 3*x^{(k)}_2 + x^{(k)}_3 \right) \\
+    \end{bmatrix}
+\end{equation*}
+
+\begin{equation*}
+    x^{(1)} = \begin{bmatrix}
+        \frac{1}{10} \left( 6 + 0 - 2*0 \right) \\
+        \frac{1}{11} \left( 25 + 6/10 + 0 - 3*0 \right) \\
+        \frac{1}{-10} \left( -11 - 2*6/10 + 128/55 + 0 \right) \\
+        \left( 15 - 3*128/55 + 543/550 \right) \\
+    \end{bmatrix}
+    = \begin{bmatrix}
+        6 / 10 \\
+        128 / 55 \\
+        543 / 550 \\
+        4953 / 550 \\
+    \end{bmatrix}
+\end{equation*}
+
+\begin{equation*}
+    x^{(2)} = \begin{bmatrix}
+        \frac{1}{10} \left( 6 + 128/55 - 2*543/550 \right) \\
+        \frac{1}{11} \left( 25 + 1747/2750 + 543/550 - 3*4953/550 \right) \\
+        \frac{1}{-10} \left( -11 - 2*1747/2750 + 1181/6050 + 4953/550 \right) \\
+        \left( 15 - 3*1181 / 6050 + 0.306988 \right) \\
+    \end{bmatrix}
+    = \begin{bmatrix}
+        1747 / 2750 \\
+        1181 / 6050 \\
+        0.306988 \\
+        14.721368 \\
+    \end{bmatrix}
+\end{equation*}
+
+\begin{equation*}
+    x^{(1)} = \begin{bmatrix}
+        \frac{1}{10} \left( 6 + 1181 / 6050 - 2*0.306988 \right) \\
+        \frac{1}{11} \left( 25 + 0.558123 + 0.306988 - 3*14.721368 \right) \\
+        \frac{1}{-10} \left( -11 - 2*0.558123 - 1.663545 + 14.721368 \right) \\
+        \left( 15 - 3*-1.663545 - 0.094158 \right) \\
+    \end{bmatrix}
+    = \begin{bmatrix}
+        0.558123 \\
+        -1.663545 \\
+        -0.094158 \\
+        19.896477 \\
+    \end{bmatrix}
+\end{equation*}
