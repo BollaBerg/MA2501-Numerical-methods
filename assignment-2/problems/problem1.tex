@@ -1,162 +1,192 @@
 \section{Problem 1}
 
 \subsection{Part 1}
-\textit{Let $x = 0.d_1...d_k... * 10^n$ in decimal representation (basis $b = 10$). Aiming at a k-digit floating point representation, we consider chopping instead of rounding, i.e. we keep the k first digits and throw away the rest}.
-\begin{equation*}
-    fl(x) = 0.d_1...d_kd_{k+1}... * 10^n
-\end{equation*}
-\textit{Show that $10^{-k-1}$ is a bound for the relative error when using k-digit chopping.}
+\textit{Show that the function $f(x) = (x+1)(x-1) / 3$ has a unique fixed point in the interval $[-1, 1]$. What can you say about the interval $[3, 4]$?}
 
-
-Observe that relative error is given by
-\begin{equation}
-    e_R = \frac{x - fl(x)}{x}
-    \label{eq:relative_error}
-\end{equation}
-
-Observe that the numerator is given by
+The definition of a fixed point is a point where $f(x) = x$ for a function $f$. This is equivalent with $f(x) - x = 0$. Observe that
 \begin{align*}
-    x - fl(x) &= 0.0...0d_{k+1}d_{k+2}... * 10^n \\
-    &= 0.d_{k+1}d_{k+1}... * 10^{n - k} \\
-    &< 1 * 10^{n-k}
+    f(x) - x &= \frac{(x+1)(x-1)}{3} - x \\
+            &= \frac{x^2 - 1}{3} - x \\
+            &= \frac{x^2 - 3x - 1}{3} \\
 \end{align*}
 
-Assuming that $d_1 > 0$, the denominator is given by
+Let $g(x) = f(x) - x$. Note that
 \begin{align*}
-    x &\ge 0.d_1 * 10^n = d_1 * 10^{n-1} \\
-    &\ge 1 * 10^{n-1}
+    g(-1) &= \frac{1 + 3 - 1}{3} > 0 \\
+    g(1)  &= \frac{1 - 3 - 1}{3} < 0 \\
 \end{align*}
 
-Combining these, we get
+As $f$ (and therefore also $g$) is continuous, $g(-1) > 0$ and $g(1) < 0$, we have from the Intermediate Value Theorem that $g$ has at least one zero on the interval $[-1, 1]$. This means that $f(x) = x$ for at least one $x \in [-1, 1]$, meaning that $f$ has a unique fixed point in the interval.
+
+
+For the interval $[3, 4]$, observe that 
 \begin{align*}
-    e_R &= \frac{x - fl(x)}{x} \\
-    &< \frac{10^{n-k}}{10^{n-1}} = 10^{1-k}
+    g(3) &= \frac{9 - 9 - 1}{3} < 0 \\
+    g(4) &= \frac{16 - 12 - 1}{3} > 0 \\
 \end{align*}
-
-The relative error has an upper bound of $10^{1-k}$ when using k-digit chopping.
-
+$g$ is still continuous, meaning that the Intermediate Value Theorem gives us the same result here - $g$ has at least one zero on the interval $[3, 4]$, meaning that $f$ has a unique fixed point in the interval.
 
 
-
-\newpage
 
 \subsection{Part 2}
-\textit{Let s be a parameter. Show that the function $f(t) = t^3 + 2t + s$ crosses the t-axis exactly once for any value of s.}
+\textit{Compute the spectral radius of the matrices}
+\begin{equation*}
+    T_1 = 
+    \begin{pmatrix}
+        0 & 1/2 & -1/2 \\
+        -1 & 0 & -1 \\
+        1/2 & 1/2 & 0
+    \end{pmatrix}
+\end{equation*}
 
-Observe that the derivate of $f$ is $f'(t) = 3t^2 + 2$, and that $f'(t) > 0 \forall t$. $f$ is therefore strictly monotone increasing, so can cross a horizontal line at most one time. This applies no matter the value of $s$.
+\begin{equation*}
+    T_2 = 
+    \begin{pmatrix}
+        0 & 1/2 & -1/2 \\
+        0 & -1/2 & -1/2 \\
+        0 & 0 & -1/2
+    \end{pmatrix}
+\end{equation*}
 
-Let $t_1 = -s$, $t_2 = s$ for $s > 0$. Note that $f$ is continuous on the whole interval $[t_1, t_2]$. We then have
+
+The spectral radius is defined as the largest absolute value of its eigenvalues. We therefore start by finding the eigenvalues of the matrices.
+
 \begin{align*}
-    f(t_1) &= -s^3 - 2s + s = -s^3 - s < 0 \\
-    f(t_2) &= s^3 + 2s + s = s^3 + 3s > 0
+    \abs{T_1 - \lambda I} &= \begin{vmatrix}
+        -\lambda & 1/2 & -1/2 \\
+        -1 & -\lambda & -1 \\
+        1/2 & 1/2 & -\lambda
+    \end{vmatrix} \\
+    &= -\lambda (\lambda^2 + 1/2) - 1/2 (\lambda + 1/2) - 1/2 (-1/2 + \lambda/2) \\
+    &= -\lambda^3 - \lambda/2 - \lambda/2 - 1/4 + 1/4 - \lambda/4 \\
+    &= -\lambda^3 - \frac{5}{4}\lambda \\
+    &= -\lambda (\lambda^2 + \frac{5}{4})
+\end{align*}
+The roots of the characteristic polynomal, and thus the eigenvalues of $T_1$ are $0$ and $\pm i\sqrt{\frac{5}{4}}$. The spectral radius of $T_1$ is given as
+\begin{align*}
+    \rho(T_1) &= \max \left(\abs{0}, \abs{i\sqrt{\frac{5}{4}}}, \abs{-i\sqrt{\frac{5}{4}}} \right) \\
+        &= \max \left(0, \sqrt{\frac{5}{4}}, \sqrt{\frac{5}{4}} \right) \\
+        &= \sqrt{\frac{5}{4}}
 \end{align*}
 
-The intermediate value theorem thus states that there must exist a number $u \in (t_1, t_2)$ such that $f(u) = 0$. This holds also for $s \le 0$.
 
-Because $f$ is strictly monotone increasing, it can only cross the t-axis at most one time. Because there exists an $u$ such that $f(u) = 0$, $f$ must cross the t-axis at least one time. Combining these, we have proved that $f(s)$ crosses the t-axis exactly once for any value of $s$.
+We do the same for $T_2$:
+\begin{align*}
+    \abs{T_2 - \lambda I} &= \begin{vmatrix}
+        -\lambda & 1/2 & -1/2 \\
+        0 & -1/2 - \lambda & -1/2 \\
+        0 & 0 & -1/2 - \lambda
+    \end{vmatrix} \\
+    &= -\lambda (-1/2 - \lambda)(-1/2 - \lambda) - 0 + 0 \\
+    &= -\lambda (1/2 + \lambda)(1/2 + \lambda)
+\end{align*}
+The roots of the characteristic polynomal, and thus the eigenvalues of $T_1$ are $0$ and $\pm \frac{1}{2}$. The spectral radius of $T_2$ is given as
+\begin{align*}
+    \rho(T_2) &= \max \left(\abs{0}, \abs{\frac{1}{2}}, \abs{-\frac{1}{2}} \right) \\
+        &= \max \left(0, \frac{1}{2}, \frac{1}{2} \right) \\
+        &= \frac{1}{2}
+\end{align*}
 
 
 
 \subsection{Part 3}
-\textit{Recall that Taylor's polynomial $p(t)$ is determined by requiring that the values of the polynomial and its first $n$ derivates match those of a given function $f(t)$ at a single argument $t_0$, i.e. $p^{(i)}(t_0) = f^{(i)}(t_0)$ for $0 \le i \le n$. Find a formula for $R(t, t_0) = f(t) - p(t)$ in integral form. Assume that $f^{(n+1)}(t)$ is continuous between $t$ and $t_0$.}
-
-By the Fundamental Theorem og Calculus, observe that
+\textit{Show that for any matrix $A \in \mathbb{R}^{nxn}$}
 \begin{equation*}
-    f(t) = f(t_0) + \int_{t_0}^t f'(x) dx
+    \norm{A}_F := \left( \sum_{i=1}^n \sum_{j=1}^n \abs{a_{ij}}^2 \right)^{1/2}
+\end{equation*}
+\textit{defines a matrix norm (the so-called Frobenius norm.) Use the Cauchy-Schwarz inequality to show that for any matrix $A \in \mathbb{R}^{nxn}$ and any vector $x \in \mathbb{R}^n$}
+\begin{equation*}
+    \norm{Ax}_2 \le \norm{A}_F \norm{x}_2.
 \end{equation*}
 
-Choosing the following constants of integrations, we can integrate by parts:
+We need to show four properties that must be satisfied for $\norm{A}_F$ to be considered a matrix norm:
+\begin{enumerate}
+    \item $\norm{A}_F \ge 0$
+    \item $\norm{A}_F = 0 \Leftrightarrow A = 0_{n,n}$
+    \item $\norm{\alpha A}_F = \abs{\alpha} \norm{A}_F$ for scalar $\alpha$
+    \item $\norm{A + B}_F \le \norm{A}_F + \norm{B}_F$ for other matrix $B$
+\end{enumerate}
+
+
+1. $\norm{A}_F \ge 0$
+
+A squared scalar is always $\ge 0$. This gives the following results:
 \begin{align*}
-    u &= f' \\
-    du &= f'' dx \\
-    v &= x - t \\
-    dv &= dx 
+    \abs{a_{ij}}^2 \ge 0 \\
+    \Rightarrow \left( \sum_{i=1}^n \sum_{j=1}^n \abs{a_{ij}}^2 \right) \ge 0 \\
+    \Rightarrow \left( \sum_{i=1}^n \sum_{j=1}^n \abs{a_{ij}}^2 \right)^{1/2} \ge 0 \\
+    \Rightarrow \norm{A}_F \ge 0
 \end{align*}
 
-Then
+
+2. $\norm{A}_F = 0 \Leftrightarrow A = 0_{n,n}$
+
+We know from (1) that $\abs{a_{ij}}^2 \ge 0$. This means that $\left( \sum_{i=1}^n \sum_{j=1}^n \abs{a_{ij}}^2 \right) \ge \abs{a_{ij}}^2$.
+
+Assume $\norm{A}_F = 0$. Then
 \begin{align*}
-    f(t) &= f(t_0) + \int_{t_0}^t f'(x) dx \\
-        &= f(t_0) + f'(x)(x - t) |_{x=t_0}^{x=t} - \int_{t_0}^t f''(x)(x - t) dx \\
-        &= f(t_0) + f'(t_0)(t - t_0) + \int_{t_0}^t f''(x)(b - x) dx
+    \left( \sum_{i=1}^n \sum_{j=1}^n \abs{a_{ij}}^2 \right)^{1/2} = 0 \\
+    \Rightarrow \sum_{i=1}^n \sum_{j=1}^n \abs{a_{ij}}^2 = 0 \\
+    \Rightarrow \abs{a_{ij}}^2 \le 0
 \end{align*}
 
-Repeating this integration with new constants
+As we know from (1) that $\abs{a_{ij}}^2 \ge 0$. This means that
 \begin{align*}
-    u &= f'' \\
-    du &= f''' dx \\
-    v &= \frac{-(t - x)^2}{2} \\
-    dv &= (t - x) dx 
-\end{align*}
-Gives
-\begin{align*}
-    f(t) &= f(t_0) + f'(t_0)(t - t_0) + \int_{t_0}^t f''(x)(b - x) dx \\
-        &= f(t_0) + f'(t_0)(t - t_0) - f''(x)\frac{(t - x)^2}{2} |_{x=t_0}^{x=t} + \int_{t_0}^t f'''(x)\frac{(t - x)^2}{2} dx \\
-        &= f(t_0) + f'(t_0)(t - t_0) + f''(t_0)\frac{(t - t_0)^2}{2} + \int_{t_0}^t f'''(x)\frac{(t - x)^2}{2} dx \\
+    \abs{a_{ij}}^2 = 0 \\
+    \Rightarrow \abs{a_{ij}} = 0 \\
+    \Rightarrow A = 0_{n,n}
 \end{align*}
 
-Repeating this process $n$ times gives 
+\pagebreak
+
+3. $\norm{\alpha A}_F = \abs{\alpha} \norm{A}_F$ for scalar $\alpha$
+
+Observe that
+\begin{align*}
+    \norm{\alpha A}_F &= \left( \sum_{i=1}^n \sum_{j=1}^n \abs{\alpha a_{ij}}^2 \right)^{1/2} \\
+    &= \left( \sum_{i=1}^n \sum_{j=1}^n (\abs{a_{ij}}\abs{\alpha})^2 \right)^{1/2} \\
+    &= \left(\sum_{i=1}^n \sum_{j=1}^n \abs{a_{ij}}^2 \abs{\alpha}^2 \right)^{1/2} \\
+    &= \left( \abs{\alpha}^2 \sum_{i=1}^n \sum_{j=1}^n \abs{a_{ij}}^2 \right)^{1/2} \\
+    &= \abs{\alpha} \left( \sum_{i=1}^n \sum_{j=1}^n \abs{a_{ij}}^2 \right)^{1/2} \\
+    &= \abs{\alpha} \norm{A}_F
+\end{align*}
+
+
+4. $\norm{A + B}_F \le \norm{A}_F + \norm{B}_F$ for other matrix $B$
+
+Observe that
+\begin{align*}
+    \norm{A + B}_F &= \left( \sum_{i=1}^n \sum_{j=1}^n \abs{a_{ij} + b_{ij}}^2 \right)^{1/2} \\
+    &\le \left( \sum_{i=1}^n \sum_{j=1}^n (\abs{a_{ij}} + \abs{b_{ij}})^2 \right)^{1/2} \\
+    &= \left( \sum_{i=1}^n \sum_{j=1}^n \abs{a_{ij}}^2 + 2\abs{a_{ij}}\abs{b_{ij}} + \abs{b_{ij}}^2 \right)^{1/2} \\
+\end{align*}
+
+Because $\abs{a_{ij}} \ge 0$ and $\abs{b_{ij}} \ge 0$, $2\abs{a_{ij}}\abs{b_{ij}} \ge 0$, and we have
+\begin{align*}
+    \norm{A + B}_F &\le \left( \sum_{i=1}^n \sum_{j=1}^n \abs{a_{ij}}^2 + 2\abs{a_{ij}}\abs{b_{ij}} + \abs{b_{ij}}^2 \right)^{1/2} \\
+    &\le \left( \sum_{i=1}^n \sum_{j=1}^n \abs{a_{ij}}^2 + \abs{b_{ij}}^2 \right)^{1/2} \\
+    &= \left( \sum_{i=1}^n \sum_{j=1}^n \abs{a_{ij}}^2 + \sum_{i=1}^n \sum_{j=1}^n \abs{b_{ij}}^2 \right)^{1/2} \\
+    &\le \left( \sum_{i=1}^n \sum_{j=1}^n \abs{a_{ij}}^2 \right)^{1/2} + \left( \sum_{i=1}^n \sum_{j=1}^n \abs{b_{ij}}^2 \right)^{1/2} \\
+    &= \norm{A}_F + \norm{B}_F
+\end{align*}
+
+
+\pagebreak
+
+\textit{Use the Cauchy-Schwarz inequality to show that for any matrix $A \in \mathbb{R}^{nxn}$ and any vector $x \in \mathbb{R}^n$}
 \begin{equation*}
-    f(t) = f(t_0) + f'(t_0)(t - t_0) + f''(t_0)\frac{(t - t_0)^2}{2} + ... + f^{(n)}(t_0) \frac{(t - t_0)^n}{n!} + \int_{t_0}^t f^{(n + 1)}(x) \frac{(t - x)^n}{n!} dx
+    \norm{Ax}_2 \le \norm{A}_F \norm{x}_2.
 \end{equation*}
 
-We have from the definition that $p^{(i)}(t_0) = f^{(i)}(t_0)$ for $0 \le i \le n$, thus we can rewrite this to be
-\begin{align*}
-    f(t) &= p(t_0) + p'(t_0)(t - t_0) + p''(t_0)\frac{(t - t_0)^2}{2} + ... + p^{(n)}(t_0) \frac{(t - t_0)^n}{n!} + \int_{t_0}^t f^{(n + 1)}(x) \frac{(t - x)^n}{n!} dx \\
-        &= p(t) + \int_{t_0}^t f^{(n + 1)}(x) \frac{(t - x)^n}{n!} dx
-\end{align*}
-
-Rewriting this, we get
-\begin{equation}
-    R(t, t_0) = f(t) - p(t) = \int_{t_0}^t f^{(n + 1)}(x) \frac{(t - x)^n}{n!} dx
-\end{equation}
-
-
-
-
-\subsection{Part 4}
-\textit{Determine the Taylor polynomial $P_n(t)$ for $n = 2$ for the function $f(t) = e^{t}cos(t)$ around the point $t_0 = 0$. Find an upper bound for the remainder term for $t = 0.5$.}
-
-The Taylor polynomial for $f(t)$ is given by
-\begin{align*}
-    P_2(t) &= f(t_0) + f'(t_0) (t - t_0) + f''(t_0) \frac{(t - t_0)^2}{2} \\
-        &= f(0) + f'(0) (t) + f''(0) \frac{t^2}{2}
-\end{align*}
-
-Observe the following
-\begin{align*}
-    f(0) &= e^0 cos(0) = 1 \\
-    f'(t) &= e^t cos(t) - e^t sin(t) \\
-    f'(0) &= e^0 (cos(0) - sin(0)) = 1 \\
-    f''(t) &= e^t (cos(t) - sin(t)) - e^t(sin(t) + cos(t)) = -2e^tsin(t)\\
-    f''(0) &= 1 - 1 = 0
-\end{align*}
-
-We thus have the Taylor polynomial
-\begin{align*}
-    P_2(t) &= f(0) + f'(0) (t) + f''(0) \frac{t^2}{2} \\
-        &= 1 + t
-\end{align*}
-
-We have from the Remainder Estimation Theorem that if there is a positive constant $M$ such that $\abs{f'''(t)} \le M$ for all $t \in [0, 0.5]$, then the remainder term can be written
-\begin{align*}
-    \abs{R_n(t)} &\le M \frac{\abs{t - t_0}^{n+1}}{(n + 1)!} \\
-    \abs{R_2(0.5)} &\le M \frac{\abs{0.5}^{3}}{3!} = \frac{M}{48}
-\end{align*}
-
-Observe the following 
-\begin{align*}
-    f'''(t) &= -2e^tsin(t) -2e^tcos(t) = -2e^t (sin(t) + cos(t)) \\
-    f^{(4)}(t) &= -2e^t (sin(t) + cos(t)) -2e^t (cos(t) - sin(t)) = -4e^t cos(t)
-\end{align*}
-Note that $e^t > 0 \, \forall t$ and $cos(t) > 0 \, \forall t \in [0, 0.5]$. Then $f^{(4)}(t) < 0 \, \forall t \in [0, 0.5]$, and $f'''(t)$ is strictly monotone decreasing in the same interval. This means that $f(t) on [0, 0.5]$ has two extremas - at $t = 0$ or $t = 0.5$:
-
-\begin{align*}
-    \abs{f'''(0)} &= \abs{-2e^0 (sin(0) + cos(0))} = 2 \\
-    \abs{f'''(0.5)} &= \abs{-2e^{0.5} (sin(0.5) + cos(0.5))} \approx 3.3261
-\end{align*}
-We therefore let $M = \abs{f'''(0.5)} \approx 3.3261$, and get
-
+Note that we can write $\norm{Ax}_2$ as
 \begin{equation*}
-    \abs{R_2(0.5)} \le \frac{M}{48} \approx \frac{3.3261}{48} \approx 0.069
+    \norm{Ax}_2 = \sum_{i=1}^n \abs{\sum_{j=1}^n a_{ij}h_j}^2
 \end{equation*}
-The upper bound for the remainder term for $t = 0.5$ is $\approx 0.069$.
+
+Using the Cauchy-Schwarz inequality, observe that 
+\begin{align*}
+    \norm{Ax}_2 &= \sum_{i=1}^n \abs{\sum_{j=1}^n a_{ij}h_j}^2 \\
+    &\le \sum_{i=1}^n \left\{ \left( \sum_{j=1}^n \abs{a_{ij}}^2 \right) \left( \sum_{j=1}^n \abs{h_j}^2\right) \right\} \\
+    &= \sum_{i=1}^n \sum_{j=1}^n \abs{a_{ij}}^2 \norm{x}_2 \\
+    &= \norm{A}_F \norm{x}_2 \\
+\end{align*}
