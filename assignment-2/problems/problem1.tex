@@ -1,0 +1,162 @@
+\section{Problem 1}
+
+\subsection{Part 1}
+\textit{Let $x = 0.d_1...d_k... * 10^n$ in decimal representation (basis $b = 10$). Aiming at a k-digit floating point representation, we consider chopping instead of rounding, i.e. we keep the k first digits and throw away the rest}.
+\begin{equation*}
+    fl(x) = 0.d_1...d_kd_{k+1}... * 10^n
+\end{equation*}
+\textit{Show that $10^{-k-1}$ is a bound for the relative error when using k-digit chopping.}
+
+
+Observe that relative error is given by
+\begin{equation}
+    e_R = \frac{x - fl(x)}{x}
+    \label{eq:relative_error}
+\end{equation}
+
+Observe that the numerator is given by
+\begin{align*}
+    x - fl(x) &= 0.0...0d_{k+1}d_{k+2}... * 10^n \\
+    &= 0.d_{k+1}d_{k+1}... * 10^{n - k} \\
+    &< 1 * 10^{n-k}
+\end{align*}
+
+Assuming that $d_1 > 0$, the denominator is given by
+\begin{align*}
+    x &\ge 0.d_1 * 10^n = d_1 * 10^{n-1} \\
+    &\ge 1 * 10^{n-1}
+\end{align*}
+
+Combining these, we get
+\begin{align*}
+    e_R &= \frac{x - fl(x)}{x} \\
+    &< \frac{10^{n-k}}{10^{n-1}} = 10^{1-k}
+\end{align*}
+
+The relative error has an upper bound of $10^{1-k}$ when using k-digit chopping.
+
+
+
+
+\newpage
+
+\subsection{Part 2}
+\textit{Let s be a parameter. Show that the function $f(t) = t^3 + 2t + s$ crosses the t-axis exactly once for any value of s.}
+
+Observe that the derivate of $f$ is $f'(t) = 3t^2 + 2$, and that $f'(t) > 0 \forall t$. $f$ is therefore strictly monotone increasing, so can cross a horizontal line at most one time. This applies no matter the value of $s$.
+
+Let $t_1 = -s$, $t_2 = s$ for $s > 0$. Note that $f$ is continuous on the whole interval $[t_1, t_2]$. We then have
+\begin{align*}
+    f(t_1) &= -s^3 - 2s + s = -s^3 - s < 0 \\
+    f(t_2) &= s^3 + 2s + s = s^3 + 3s > 0
+\end{align*}
+
+The intermediate value theorem thus states that there must exist a number $u \in (t_1, t_2)$ such that $f(u) = 0$. This holds also for $s \le 0$.
+
+Because $f$ is strictly monotone increasing, it can only cross the t-axis at most one time. Because there exists an $u$ such that $f(u) = 0$, $f$ must cross the t-axis at least one time. Combining these, we have proved that $f(s)$ crosses the t-axis exactly once for any value of $s$.
+
+
+
+\subsection{Part 3}
+\textit{Recall that Taylor's polynomial $p(t)$ is determined by requiring that the values of the polynomial and its first $n$ derivates match those of a given function $f(t)$ at a single argument $t_0$, i.e. $p^{(i)}(t_0) = f^{(i)}(t_0)$ for $0 \le i \le n$. Find a formula for $R(t, t_0) = f(t) - p(t)$ in integral form. Assume that $f^{(n+1)}(t)$ is continuous between $t$ and $t_0$.}
+
+By the Fundamental Theorem og Calculus, observe that
+\begin{equation*}
+    f(t) = f(t_0) + \int_{t_0}^t f'(x) dx
+\end{equation*}
+
+Choosing the following constants of integrations, we can integrate by parts:
+\begin{align*}
+    u &= f' \\
+    du &= f'' dx \\
+    v &= x - t \\
+    dv &= dx 
+\end{align*}
+
+Then
+\begin{align*}
+    f(t) &= f(t_0) + \int_{t_0}^t f'(x) dx \\
+        &= f(t_0) + f'(x)(x - t) |_{x=t_0}^{x=t} - \int_{t_0}^t f''(x)(x - t) dx \\
+        &= f(t_0) + f'(t_0)(t - t_0) + \int_{t_0}^t f''(x)(b - x) dx
+\end{align*}
+
+Repeating this integration with new constants
+\begin{align*}
+    u &= f'' \\
+    du &= f''' dx \\
+    v &= \frac{-(t - x)^2}{2} \\
+    dv &= (t - x) dx 
+\end{align*}
+Gives
+\begin{align*}
+    f(t) &= f(t_0) + f'(t_0)(t - t_0) + \int_{t_0}^t f''(x)(b - x) dx \\
+        &= f(t_0) + f'(t_0)(t - t_0) - f''(x)\frac{(t - x)^2}{2} |_{x=t_0}^{x=t} + \int_{t_0}^t f'''(x)\frac{(t - x)^2}{2} dx \\
+        &= f(t_0) + f'(t_0)(t - t_0) + f''(t_0)\frac{(t - t_0)^2}{2} + \int_{t_0}^t f'''(x)\frac{(t - x)^2}{2} dx \\
+\end{align*}
+
+Repeating this process $n$ times gives 
+\begin{equation*}
+    f(t) = f(t_0) + f'(t_0)(t - t_0) + f''(t_0)\frac{(t - t_0)^2}{2} + ... + f^{(n)}(t_0) \frac{(t - t_0)^n}{n!} + \int_{t_0}^t f^{(n + 1)}(x) \frac{(t - x)^n}{n!} dx
+\end{equation*}
+
+We have from the definition that $p^{(i)}(t_0) = f^{(i)}(t_0)$ for $0 \le i \le n$, thus we can rewrite this to be
+\begin{align*}
+    f(t) &= p(t_0) + p'(t_0)(t - t_0) + p''(t_0)\frac{(t - t_0)^2}{2} + ... + p^{(n)}(t_0) \frac{(t - t_0)^n}{n!} + \int_{t_0}^t f^{(n + 1)}(x) \frac{(t - x)^n}{n!} dx \\
+        &= p(t) + \int_{t_0}^t f^{(n + 1)}(x) \frac{(t - x)^n}{n!} dx
+\end{align*}
+
+Rewriting this, we get
+\begin{equation}
+    R(t, t_0) = f(t) - p(t) = \int_{t_0}^t f^{(n + 1)}(x) \frac{(t - x)^n}{n!} dx
+\end{equation}
+
+
+
+
+\subsection{Part 4}
+\textit{Determine the Taylor polynomial $P_n(t)$ for $n = 2$ for the function $f(t) = e^{t}cos(t)$ around the point $t_0 = 0$. Find an upper bound for the remainder term for $t = 0.5$.}
+
+The Taylor polynomial for $f(t)$ is given by
+\begin{align*}
+    P_2(t) &= f(t_0) + f'(t_0) (t - t_0) + f''(t_0) \frac{(t - t_0)^2}{2} \\
+        &= f(0) + f'(0) (t) + f''(0) \frac{t^2}{2}
+\end{align*}
+
+Observe the following
+\begin{align*}
+    f(0) &= e^0 cos(0) = 1 \\
+    f'(t) &= e^t cos(t) - e^t sin(t) \\
+    f'(0) &= e^0 (cos(0) - sin(0)) = 1 \\
+    f''(t) &= e^t (cos(t) - sin(t)) - e^t(sin(t) + cos(t)) = -2e^tsin(t)\\
+    f''(0) &= 1 - 1 = 0
+\end{align*}
+
+We thus have the Taylor polynomial
+\begin{align*}
+    P_2(t) &= f(0) + f'(0) (t) + f''(0) \frac{t^2}{2} \\
+        &= 1 + t
+\end{align*}
+
+We have from the Remainder Estimation Theorem that if there is a positive constant $M$ such that $\abs{f'''(t)} \le M$ for all $t \in [0, 0.5]$, then the remainder term can be written
+\begin{align*}
+    \abs{R_n(t)} &\le M \frac{\abs{t - t_0}^{n+1}}{(n + 1)!} \\
+    \abs{R_2(0.5)} &\le M \frac{\abs{0.5}^{3}}{3!} = \frac{M}{48}
+\end{align*}
+
+Observe the following 
+\begin{align*}
+    f'''(t) &= -2e^tsin(t) -2e^tcos(t) = -2e^t (sin(t) + cos(t)) \\
+    f^{(4)}(t) &= -2e^t (sin(t) + cos(t)) -2e^t (cos(t) - sin(t)) = -4e^t cos(t)
+\end{align*}
+Note that $e^t > 0 \, \forall t$ and $cos(t) > 0 \, \forall t \in [0, 0.5]$. Then $f^{(4)}(t) < 0 \, \forall t \in [0, 0.5]$, and $f'''(t)$ is strictly monotone decreasing in the same interval. This means that $f(t) on [0, 0.5]$ has two extremas - at $t = 0$ or $t = 0.5$:
+
+\begin{align*}
+    \abs{f'''(0)} &= \abs{-2e^0 (sin(0) + cos(0))} = 2 \\
+    \abs{f'''(0.5)} &= \abs{-2e^{0.5} (sin(0.5) + cos(0.5))} \approx 3.3261
+\end{align*}
+We therefore let $M = \abs{f'''(0.5)} \approx 3.3261$, and get
+
+\begin{equation*}
+    \abs{R_2(0.5)} \le \frac{M}{48} \approx \frac{3.3261}{48} \approx 0.069
+\end{equation*}
+The upper bound for the remainder term for $t = 0.5$ is $\approx 0.069$.

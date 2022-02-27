@@ -1,0 +1,34 @@
+\section{Problem 2}
+\textit{Consider the equation $t^2 = a$ written in fixed point form $t = F(t)$. It turns out that several $F(t)$ are possible:}
+\begin{align*}
+    F_1(t) &= 0.5(t + at^{-1}) \\
+    F_2(t) &= at^{-1} \\
+    F_3(t) &= 2t - at^{-1}.
+\end{align*}
+\textit{Verify that this is true and discuss the (non-)convergence behavior for the corresponding iteration $t_{n+1} = F(t_n), n \ge 0$, for each of the three cases. If possible, determine the order of convergence.}
+
+Observe that
+\begin{align*}
+    F_1(t) &= 0.5(t + at^{-1}) \\
+        &= 0.5(t + t^2t^{-1}) \\
+        &= 0.5(t + t) = t
+\end{align*}
+\begin{align*}
+    F_2(t) &= at^{-1} \\
+        &= t^2t^{-1} = t
+\end{align*}
+\begin{align*}
+    F_3(t) &= 2t - at^{-1} \\
+        &= 2t - t^2t^{-1} \\
+        &= 2t - t = t
+\end{align*}
+Thus, $F_1(t) = t$, $F_2(t) = t$ and $F_3(t) = t$.
+
+
+As all functions $F_n(t)$ are defined and continuous on $\mathbb{R} \setminus 0$, we have from the Contraction Mapping Theorem that they will converge if they are \textit{contractions}, i.e. if there exists a constant $L$ such that $0 < L < 1$ and $\abs{F_n(t_1) - F_n(t_0)} \le L\abs{t_1 - t_0} \, \forall t_1, t_0 \in \mathbb{R} \setminus 0$.
+
+Note that all functions are continuous and differentiable on $\mathbb{R} \setminus 0$. We therefore have from the Mean Value Theorem that for any $x, y \in \mathbb{R} \setminus 0$
+\begin{equation*}
+    \abs{F_n(t_1) - F_n(t_0)} = \abs{F_n'(\beta)(t_1 - t_0)} = \abs{F_n'(\beta)} \abs{t_1 - t_0}
+\end{equation*}
+for some $\beta$ between $t_1$ and $t_0$.
