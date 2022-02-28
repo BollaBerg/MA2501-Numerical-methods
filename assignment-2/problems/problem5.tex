@@ -1,1 +1,73 @@
 \section{Problem 5}
+\textit{Formulate the problem of finding a straight line $y = x_1 + tx_2$ fitting the following points in the $(t,y)$-plane}
+\begin{align*}
+    (1, 1.4501) \\
+    (2, 1.7311) \\
+    (3, 3.1068) \\
+    (4, 3.9860) \\
+    (5, 5.3913) \\
+\end{align*}
+\textit{as a least squares problem and solve it (find $x_1, x_2$).}
+
+We define $f(t) = x_1 + tx_2$ to the function for our line, and define $r_i$ as the residuals for each $i$, i.e.
+\begin{equation*}
+    r_i = y_i - f(t_i) = y_i - x_1 - t_i x_2 \qquad \forall i \in [1, 5]
+\end{equation*}
+\begin{equation*}
+    S = \sum_{i=1}^5 r_i^2 = \sum_{i=1}^5 (y_i - f(t_i))^2 = \sum_{i=1}^5 (y_i - x_1 - t_i x_2)^2
+\end{equation*}
+
+To find the straight line fitting the points, we want to minimize $S$, i.e. $\min_{x_1, x_2} S$.
+
+Note that we want to find values of $x_1, x_2$ that minimizes the error. This is, by definition, in the points where 
+\begin{equation*}
+    \frac{\partial S}{\partial x_1} = \frac{\partial S}{ \partial x_2} = 0
+\end{equation*}
+
+Observe that 
+\begin{align*}
+    \frac{\partial S}{\partial x_1} &= \sum_{i=1}^5 2(y_i - x_1 - t_i x_2)(-1) \\
+    \frac{\partial S}{\partial x_1} &= \sum_{i=1}^5 2(y_i - x_1 - t_i x_2)(-t_i)
+\end{align*}
+
+Setting these equal to $0$ gives us
+\begin{align*}
+    \sum_{i=1}^5 (y_i - x_1 - t_i x_2) &= 0 \\
+    \sum_{i=1}^5 (y_i - x_1 - t_i x_2)(t_i) &= 0 \\
+\end{align*}
+
+We can rewrite this as
+\begin{align*}
+    x_1\left( \sum_{i=1}^5 1 \right) + x_2\left( \sum_{i=1}^5 t_i \right) &= \left( \sum_{i=1}^5 y_i \right)\\
+    x_1\left( \sum_{i=1}^5 t_i \right) + x_2\left( \sum_{i=1}^5 t_i^2 \right) &= \left( \sum_{i=1}^5 t_i y_i \right)\\
+\end{align*}
+
+We can compute these sums by hand, easily
+\begin{align*}
+    \sum_{i=1}^5 1 &= 5 \\
+    \sum_{i=1}^5 t_i &= 1 + 2 + 3 + 4 + 5 = 15 \\
+    \sum_{i=1}^5 y_i &= 1.4501 + 1.7311 + 3.1068 + 3.9860 + 5.3913 = 15.6653 \\
+    \sum_{i=1}^5 t_i^2 &= 1 + 4 + 9 + 16 + 25 = 55 \\
+    \sum_{i=1}^5 t_i y_i &= 1.4501 + 2*1.7311 + 3*3.1068 + 4*3.9860 + 5*5.3913 = 57.1332 \\
+\end{align*}
+
+We then have a system of two equations
+\begin{align*}
+    x_1 * 5 + x_2 * 15 &= 15.6653 \\
+    x_1 * 15 + x_2 * 55 &= 57.1332 \\
+\end{align*}
+
+We simply solve this by hand:
+\begin{align*}
+    x_1 * 5 &= 15.6653 - x_2 * 15 \\
+    3 * (15.6653 - x_2 * 15) + x_2 * 55 &= 57.1332 \\
+    49.9959 - 45x_2 + 55x_2 &= 57.1332 \\
+    10x_2 &= 7.1373 \\
+    x_2 &= 0.71373 \\
+    x_1 &= 15.6653 - x_2 * 15 = 15.6653 - 10.70595 = 4.95935 \\
+\end{align*}
+
+We then have the best-fitting straight line for the problem given as
+\begin{equation*}
+    y = 4.95935 + 0.71373t
+\end{equation*}
