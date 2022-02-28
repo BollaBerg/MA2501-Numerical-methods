@@ -1,1 +1,165 @@
-\section{Problem 1}
+\section{Problem 4}
+\textit{Use LU factorisation to find the solution of the system (provide all details):}
+\begin{align*}
+    x_1 + x_2 + 3x_4 &= 8 \\
+    2x_1 + x_2 - x_3 + x_4 &= 7 \\
+    3x_1 - x_2 - x_3 + 2x_4 &= 14 \\
+    -x_1 + 2x_2 + 3x_3 - x_4 &= -7 \\
+\end{align*}
+
+Let 
+\begin{equation*}
+    A = \begin{bmatrix}
+        1 & 1 & 0 & 3 \\
+        2 & 1 & -1 & 1 \\
+        3 & -1 & -1 & 2 \\
+        -1 & 2 & 3 & -1 \\
+    \end{bmatrix}
+\end{equation*}
+Then we want to find triangular matrices $L, U$ such that $A = LU$. We have that
+\begin{equation*}
+    A = \begin{bmatrix}
+        1 & 1 & 0 & 3 \\
+        2 & 1 & -1 & 1 \\
+        3 & -1 & -1 & 2 \\
+        -1 & 2 & 3 & -1 \\
+    \end{bmatrix}
+     = \begin{bmatrix}
+        l_{11} & 0 & 0 & 0 \\
+        l_{21} & l_{22} & 0 & 0 \\
+        l_{31} & l_{32} & l_{33} & 0 \\
+        l_{41} & l_{42} & l_{43} & l_{44} \\
+    \end{bmatrix}
+    \begin{bmatrix}
+        u_{11} & u_{12} & u_{13} & u_{14} \\
+        0 & u_{22} & u_{23} & u_{24} \\
+        0 & 0 & u_{33} & u_{34} \\
+        0 & 0 & 0 & u_{44} \\
+    \end{bmatrix}
+\end{equation*}
+
+We can solve this as a system of equations:
+\begin{align*}
+    l_{11} * u_{11} &= 1 \\
+    l_{11} * u_{12} &= 1 \\
+    l_{11} * u_{13} &= 0 \\
+    l_{11} * u_{14} &= 3 \\
+    l_{21} * u_{11} &= 2 \\
+    l_{21} * u_{12} + l_{22} * u_{22} &= 1 \\
+    l_{21} * u_{13} + l_{22} * u_{23} &= -1 \\
+    l_{21} * u_{14} + l_{22} * u_{24} &= 1 \\
+    l_{31} * u_{11} &= 3 \\
+    l_{31} * u_{12} + l_{32} * u_{22} &= -1 \\
+    l_{31} * u_{13} + l_{32} * u_{23} + l_{33} * u_{33} &= -1 \\
+    l_{31} * u_{14} + l_{32} * u_{24} + l_{33} * u_{34} &= 2 \\
+    l_{41} * u_{11} &= -1 \\
+    l_{41} * u_{12} + l_{42} * u_{22} &= 2 \\
+    l_{41} * u_{13} + l_{42} * u_{23} + l_{43} * u_{33} &= 3 \\
+    l_{41} * u_{14} + l_{42} * u_{24} + l_{43} * u_{34} + l_{44} * u_{44} &= -1 \\
+\end{align*}
+
+To solve this, we need some limitations on the elements. We require $L$ to be a unit triangular matrix. We can solve the system, and see that
+
+\begin{align*}
+    l_{11} = l_{22} = l_{33} = l_{44} &= 1 \\
+    u_{11} &= 1 \\
+    u_{12} &= 1 \\
+    u_{13} &= 0 \\
+    u_{14} &= 3 \\
+    l_{21} &= 2 \\
+    u_{22} &= 1 - 2 = -1\\
+    u_{23} &= -1 \\
+    u_{24} &= 1 - 6 = -5 \\
+    l_{31} &= 3 \\
+    l_{32} &= (-1 - 3) / -1 = 4 \\
+    u_{33} &= -1 + 4 = 3\\
+    u_{34} &= 2 - 9 + 20 = 13 \\
+    l_{41} &= -1 \\
+    l_{42} &= (2 + 1) / -1 = -3 \\
+    l_{43} &= (3 - 3) / 3 = 0 \\
+    u_{44} &= -1 + 3 - 15 = -13 \\
+\end{align*}
+
+We then have
+
+\begin{equation*}
+    A = \begin{bmatrix}
+        1 & 1 & 0 & 3 \\
+        2 & 1 & -1 & 1 \\
+        3 & -1 & -1 & 2 \\
+        -1 & 2 & 3 & -1 \\
+    \end{bmatrix}
+     = \begin{bmatrix}
+        1 & 0 & 0 & 0 \\
+        2 & 1 & 0 & 0 \\
+        3 & 4 & 1 & 0 \\
+        -1 & -3 & 0 & 1 \\
+    \end{bmatrix}
+    \begin{bmatrix}
+        1 & 1 & 0 & 3 \\
+        0 & -1 & -1 & -5 \\
+        0 & 0 & 3 & 13 \\
+        0 & 0 & 0 & -13 \\
+    \end{bmatrix}
+    = LU
+\end{equation*}
+
+To solve the system given in the assignment, observe that $Ax = LUx$. We first calculate $y$ such that $Ly = b$, then we calculate $x$ such that $Ux = y$, which means that $Ax = LUx = Ly = b$.
+\begin{align*}
+    Ly &= b \\
+    \begin{bmatrix}
+        1 & 0 & 0 & 0 \\
+        2 & 1 & 0 & 0 \\
+        3 & 4 & 1 & 0 \\
+        -1 & -3 & 0 & 1 \\
+    \end{bmatrix}
+    \begin{bmatrix}
+        y_1 \\ y_2 \\ y_3 \\ y_4
+    \end{bmatrix}
+    &= \begin{bmatrix}
+        8 \\ 7 \\ 14 \\ -7
+    \end{bmatrix}
+\end{align*}
+
+We can convert this to a set of equations, and find that
+\begin{align*}
+    y_1 &= 8 \\
+    2y_1 + y_2 = 7 \Rightarrow y_2 &= 7 - 16 = -9 \\
+    3y_1 + 4y_2 + y_3 = 14 \Rightarrow y_3 &= 14 - 24 + 36 = 26 \\
+    -y_1 - 3y_2 + y_4 = -7 \Rightarrow y_4 &= -7 + 8 -27 = -26 \\
+\end{align*}
+
+We then find
+\begin{align*}
+    Ux &= y \\
+    \begin{bmatrix}
+        1 & 1 & 0 & 3 \\
+        0 & -1 & -1 & -5 \\
+        0 & 0 & 3 & 13 \\
+        0 & 0 & 0 & -13 \\
+    \end{bmatrix}
+    \begin{bmatrix}
+        x_1 \\ x_2 \\ x_3 \\ x_4 \\
+    \end{bmatrix}
+    &= \begin{bmatrix}
+        8 \\ -9 \\ 26 \\ -26 \\
+    \end{bmatrix}
+\end{align*}
+
+We convert this to a set of equations, and find that
+\begin{align*}
+    -13x_4 = -26 \Rightarrow x_4 &= -26 / -13 = 2 \\
+    3x_3 + 13x_4 = 26 \Rightarrow x_3 &= (26 - 26) / 3 = 0 \\
+    -x_2 - x_3 - 5x_4 = -9 \Rightarrow x_2 &= (-9 + 0 + 10) / -1 = -1 \\
+    x_1 + x_2 + 3x_4 = 8 \Rightarrow x_1 &= 8 + 1 - 6 = 3 \\
+\end{align*}
+
+We then have a solution to the system of equations above:
+\begin{equation*}
+    x = \begin{bmatrix}
+        x_1 \\ x_2 \\ x_3 \\ x_4 \\
+    \end{bmatrix}
+     = \begin{bmatrix}
+        3 \\ -1 \\ 0 \\ 2 \\
+    \end{bmatrix}
+\end{equation*}
