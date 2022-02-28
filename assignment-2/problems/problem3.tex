@@ -1,1 +1,47 @@
 \section{Problem 3}
+\textit{Looking at the system}
+\begin{align*}
+    2x_1 - x_2 + x_3 &= -1 \\
+    2x_1 + 2x_2 + 2x_3 &= 4 \\
+    -x_1 - x_2 + 2x_3 &= -5
+\end{align*}
+\textit{and using the results from Problem 1(2), what can you say about applying the Jacobi iterative method
+and the Gauss–Seidel iterative method, both for initial value $x^{(0)} = (0, 0, 0)^T$?}
+
+We start by writing this system in matrix form, $Ax = b$:
+\begin{equation*}
+\begin{bmatrix}
+    2 & -1 & 1 \\
+    2 & 2 & 2 \\
+    -1 & -1 & 2 \\
+\end{bmatrix}
+\begin{bmatrix}
+    x_1 \\ x_2 \\ x_3 \\
+\end{bmatrix}
+= \begin{bmatrix}
+    -1 \\ 4 \\ -5
+\end{bmatrix}
+\end{equation*}
+
+The standard convergence condition for any iterative method is that the spectral radius of the iteration matrix is less than 1:
+\begin{equation*}
+    \rho(D^{-1}(L + U)) < 1
+\end{equation*}
+where $D$ is the diagonal of $A$, $L$ is the lower triangular matrix and $U$ is the upper triangular matrix of $A$.
+
+Let $T_1$ be the matrix from Problem 1(2). Observe that $A = -2T_1 + 2I = 2(I - T_1)$. This is the same as saying 
+\begin{align*}
+    L + U &= -2T_1 \\
+    D &= 2I  \Rightarrow  D^{-1} = I / 2\\
+\end{align*}
+We thus have 
+\begin{align*}
+    \rho(D^{-1}(L + U)) &= \rho(I/2 (-2T_1)) \\
+    &= \rho(-T_1)
+\end{align*}
+As the spectral radius looks at the absolute value of eigenvalues of a matrix and $eigenvalues_{-T_1} = -eigenvalues_{T_1}$, we have that $\rho(-T_1) = \rho(T_1)$. Combine this with what we found in Problem 1(2), and we see that
+\begin{equation*}
+    \rho(D^{-1}(L + U)) = \rho(-T_1) = \rho(T_1) = \sqrt{\frac{5}{4}} > 1
+\end{equation*}
+
+As the standard convergence condition is not satisfied, we see that neither the Jacobi iterative method nor the Gauss-Seidel iterative method will converge.
