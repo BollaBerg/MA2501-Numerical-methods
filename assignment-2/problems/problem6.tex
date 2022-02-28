@@ -123,7 +123,251 @@ This follows from our previous calculation:
 \begin{equation*}
     \lim_{k \to \infty} \frac{\abs{x_{k+1} - \xi}}{\abs{x_k - \xi}^q} = A
 \end{equation*}
-\textit{Show that $q - 1 - 1/q = 0$, and hence that $q = \frac{1}{2} (1 + \sqrt{5})$. Deduce finally that}
+\textit{Show that $q - 1 - 1/q = 0$, and hence that $q = \frac{1}{2} (1 + \sqrt{5})$.}
+
+If $q - 1 - 1/q = 0$, then we have $q^2 - q - 1 = 0$. The ABC-rule then gives us
+\begin{equation*}
+    q = \frac{1 \pm \sqrt{5}}{2}
+\end{equation*}
+and, since $q > 0$, it must be that
+\begin{equation*}
+    q = \frac{1}{2} (1 + \sqrt{5})
+\end{equation*}
+
+
+\textit{Deduce finally that}
 \begin{equation*}
     \lim_{k \to \infty} \frac{\abs{x_{k+1} - \xi}}{\abs{x_k - \xi}^q} = \left( \frac{f''(\xi)}{2f'(\xi)} \right)^{q / (1+q)}
 \end{equation*}
+
+
+\textcolor{red}{I ran out of time for this exercise, after struggling with the above. I am therefore unable to show that $q - 1 - q/1 = 0$ and the final deduction. I am sorry for that!}
+
+
+\subsection{Exercise 2.7}
+\textit{Suppose that for a matrix $A \in \mathbb{R}^{nxn}$,}
+\begin{equation*}
+    \sum_{i=1}^n \abs{a_{ij}} \le C, \; j=1, ..., n
+\end{equation*}
+\textit{Show that, for any vector $x \in \mathbb{R}^n$,}
+\begin{equation*}
+    \sum_{i=1}^n \abs{(Ax)_i} \le C \norm{x}_1
+\end{equation*}
+
+Note that
+\begin{equation*}
+    (Ax)_i = \sum_{k=1}^n a_{ik} x_k
+\end{equation*}
+
+It follows from this, the triangle inequality and the definition of the 1-norm that
+\begin{align*}
+    \sum_{i=1}^n \abs{(Ax)_i} &= \sum_{i=1}^n \abs{\sum_{k=1}^n a_{ik} x_k} \\
+    &\le \sum_{i=1}^n \sum_{k=1}^n \abs{a_{ik}} \abs{x_k} \\
+    &= \sum_{k=1}^n \sum_{i=1}^n \abs{a_{ik}} \abs{x_k} \\
+    &\le \sum_{k=1}^n C \abs{x_k} \\
+    &= C \sum_{k=1}^n \abs{x_k} \\
+    &= C \norm{x}_1 \\
+\end{align*}
+
+
+\textit{Find a nonzero vector $x$ for which equality can be achieved, and deduce that}
+\begin{equation*}
+    \norm{A}_1 = \max_{j=1}^n \sum_{i=1}^n \abs{a_{ij}}
+\end{equation*}
+
+Let
+\begin{align*}
+    A = \begin{bmatrix}
+        1 & 0 \\ 2 & 3 \\
+    \end{bmatrix},
+    x = \begin{bmatrix}
+        1 \\ 1 \\
+    \end{bmatrix}
+\end{align*}
+
+Observe that
+\begin{align*}
+    \sum_{i=1}^n \abs{a_{ij}} &= 3 \; \forall j \\
+    &\Rightarrow C = 3 \\
+    \norm{x}_1 &= \sum_{i=1}^2 \abs{x_i} = 1 + 1 = 2 \\
+    Ax &= \begin{bmatrix}
+        1 \\ 5 \\
+    \end{bmatrix} \\
+\end{align*}
+
+It is easy to see that
+\begin{equation*}
+    \sum_{i=1}^n \abs{(Ax)_i} = 1 + 5 = 6 = 3 * 2 = C \norm{x}_1
+\end{equation*}
+
+
+
+
+\subsection{Exercise 2.14}
+\textit{Suppose that $A \in \mathbb{R}^{nxn}$ is a nonsingular matrix, and $b \in \mathbb{R}^n_*$. Given that $Ax = b$ and $A(x + \delta x) = b + \delta b$, Theorem 2.11 states that}
+\begin{equation*}
+    \frac{\norm{\delta x}}{\norm{x}} \le \kappa(A) \frac{\norm{\delta b}}{\norm{b}}
+\end{equation*}
+\textit{By considering the eigenvectors of $A^T A$, show how to find vectors $b$ and $\delta b$ for which equality is attained, when using the two-norm.}
+
+We want to find vectors $b$ and $\delta b$ such that
+\begin{equation*}
+    \frac{\norm{\delta x}_2}{\norm{x}_2} = \kappa(A) \frac{\norm{\delta b}_2}{\norm{b}_2}
+\end{equation*}
+Note that theorem 2.11 comes from multiplying two inequalities:
+\begin{align*}
+    \norm{b}_2 &\le \norm{A}_2 \norm{x}_2 \\
+    \norm{\delta x}_2 &\le \norm{A^{-1}}_2 \norm{\delta b}_2
+\end{align*}
+
+In order to end up with an equality, we want to find vectors $b$ and $\delta b$ that makes the latter two inequalities equalities. I.e., we want to find vectors such that
+\begin{align*}
+    \norm{b}_2 &= \norm{A}_2 \norm{x}_2 \\
+     \norm{\delta b}_2 &= \frac{\norm{\delta x}_2}{\norm{A^{-1}}_2}
+\end{align*}
+
+As the 2-norm of a matrix $A$ is the largest singular value of the matrix $A^T A$, use the eigenvectors of $A^T A$ to find the eigenvalues of $A^T A$, by applying the formula $(A^T A)x = \lambda x$, where $x$ is the eigenvectors and $\lambda$ is the eigenvalues. Then, $\norm{A}_2 = \sqrt{\lambda_{\max}}$. For the 2-norm of the inverse matrix, note that $\norm{A^{-1}}_2 = 1 / \sqrt{\lambda_{\min}}$.
+
+As such, we achieve equality by letting
+\begin{align*}
+    b &= \sqrt{\lambda_{max}} * x \\
+    \delta b &= \sqrt{\lambda_{\min}} * \delta x \\
+\end{align*}
+
+
+
+\subsection{Exercise 2.15}
+\textit{Find the QR factorization of the matrix}
+\begin{equation*}
+    A = \begin{bmatrix}
+        9 & -6 \\ 12 & -8 \\ 0 & 20 \\
+    \end{bmatrix}
+\end{equation*}
+
+We use the Gram-Schmidt process to find the QR factorization. We first find the projection matrix $U$, where $u_1 = a_1$, $u_2 = a_2 - proj_{u_1} a_2$ for column $a_i$ in A, and $proj_u a = \frac{u \cdot a}{u \cdot u} u$.
+\begin{align*}
+    U &= [u_1, u_2] \\
+    u_1 &= a_1 = (9, 12, 0)^T \\
+    u_2 &= a_2 - proj_{u_1} a_2 = (-6, -8, 20)^T - \frac{u_1 \cdot a_2}{u_1 \cdot u_1} u_1 \\
+    &= (-6, -8, 20)^T
+        - \frac{9*(-6) + 12*(-8)}
+            {9^2 + 12^2} (9, 12, 0)^T\\
+    &= (-6, -8, 20)^T
+        - \frac{-150}
+            {225} (9, 12, 0)^T \\
+    &= (-6, -8, 20)^T - (-6, -8, 0)^T \\
+    &= (0, 0, 20)^T \\
+\end{align*}
+
+We then compute $Q = [\frac{u_1}{\norm{u_1}}, \frac{u_2}{\norm{u_2}}]$
+\begin{align*}
+    Q &= [\frac{u_1}{\norm{u_1}}, \frac{u_2}{\norm{u_2}}] \\
+    \frac{u_1}{\norm{u_1}} &=
+        \frac{(9, 12, 0)^T}{\sqrt{9^2 + 12^2}} \\
+    &= (\frac{3}{5}, \frac{4}{5}, 0)^T \\
+    \frac{u_2}{\norm{u_2}} &= 
+        \frac{(0, 0 20)^T}{\sqrt{20^2}} \\
+    &= (0, 0, 1)^T \\
+    Q &= \begin{bmatrix}
+        3/5 & 0 \\
+        4/5 & 0 \\
+        0 & 1 \\
+    \end{bmatrix}
+\end{align*}
+
+We use the fact that $Q^T Q = I$ to find $R = Q^T Q R = Q^T A$
+\begin{align*}
+    R &= Q^T A \\
+        &= \begin{bmatrix}
+            3/5 & 4/5 & 0 \\
+            0 & 0 & 1 \\
+        \end{bmatrix}
+        \begin{bmatrix}
+            9 & -6 \\ 12 & -8 \\ 0 & 20 \\
+        \end{bmatrix} \\
+        &= \begin{bmatrix}
+            15 & -10 \\
+            0 & 20 \\
+        \end{bmatrix}
+\end{align*}
+
+We thus have
+\begin{equation*}
+    A = QR = \begin{bmatrix}
+        3/5 & 0 \\
+        4/5 & 0 \\
+        0 & 1 \\
+    \end{bmatrix}
+    \begin{bmatrix}
+            15 & -10 \\
+            0 & 20 \\
+        \end{bmatrix}
+\end{equation*}
+
+\textit{Find the least squares solution of the system of linear equations}
+\begin{align*}
+    9x -6y &= 300 \\
+    12x - 8y &= 600 \\
+    20y &= 900 \\
+\end{align*}
+
+
+To solve this, we know that the optimal solution can be found as 
+\begin{equation*}
+    \hat{x} = R_1^{-1} (Q_1^T b)
+\end{equation*}
+where $R_1 = R$ and $Q_1 = Q$ (in our case) and $b = (300, 600, 900)^T$. Note that
+\begin{equation*}
+    R^{-1} = \begin{bmatrix}
+            1/15 & 1/30 \\ 0 & 1/20 \\
+    \end{bmatrix}
+\end{equation*}
+
+We can then compute
+\begin{align*}
+    \hat{x} &= R^{-1} (Q^T b) \\
+    &= \begin{bmatrix}
+        1/15 & 1/30 \\ 0 & 1/20 \\
+    \end{bmatrix} \left(
+    \begin{bmatrix}
+        3/5 & 4/5 & 0 \\
+        0 & 0 & 1 \\
+    \end{bmatrix}
+    \begin{bmatrix}
+        300 \\ 600 \\ 900 \\
+    \end{bmatrix}
+    \right) \\
+    &= \begin{bmatrix}
+        1/15 & 1/30 \\ 0 & 1/20 \\
+    \end{bmatrix}
+    \begin{bmatrix}
+        660 \\ 900 \\
+    \end{bmatrix} \\
+    &= \begin{bmatrix}
+        74 \\ 45 \\
+    \end{bmatrix} \\
+\end{align*}
+
+The least squares solution of the system is given as
+\begin{align*}
+    x &= 74 \\
+    y &= 45 \\
+\end{align*}
+
+
+
+\subsection{Exercise 5.1}
+\textit{Give a proof of Lemma 5.3}
+
+$H_k$ is created by an original vector $v^0$ with length $k$. Assume now that you create a new Household matrix based on a new vector $v^1$ with length $n$, created by combining a 0-vector with length $n - k$ with the original $v^0$, i.e.
+\begin{equation*}
+    v^1 = (0, ..., 0, v^0_1, ..., v^0_k)^T
+\end{equation*}
+
+As $\frac{2}{(v^1)^T v^1} v^1 (v^1)^T$ is a matrix with 0 in the first $n-k$ rows and columns, and the rest being equal to $\frac{2}{(v^0)^T v^0} v^0 (v^0)^T$, it is easy to see that the resulting Household matrix $H_n = I - \frac{2}{(v^1)^T v^1} v^1 (v^1)^T$ is equal to the described matrix $H$. 
+
+
+\subsection{Exercise 5.2}
+\textit{Use Householder matrices to transform the matrix $A$ to tridiagonal form.}
+
+\textcolor{red}{I am sorry to say that I ran out of time before being able to finish this exercise. While I do think it would be relatively straight forward to solve, I simply don't have the time to do this before handing in. I apologize, and hope the other 19 pages of hard work is enough to get this assignment approved!}
