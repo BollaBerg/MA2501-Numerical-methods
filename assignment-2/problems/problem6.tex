@@ -1,2 +1,129 @@
 \section{Problem 6}
-\textit{Süli-Mayers: Ex. 1.8, 2.8, 4.8}
+\textit{Süli-Mayers: Ex. 1.10, 2.7, 2.14, 2.15, 5.1, 5.2}
+
+\subsection{Exercise 1.10}
+\textit{Write the secant iteration in the form}
+\begin{equation*}
+    x_{k+1} = \frac{x_k f(x_{k-1}) - x_{k-1} f(x_k)}{f(x_{k-1}) - f(x_k)}
+\end{equation*}
+\textit{Supposing that $f$ has a continuous second derivative in the neighbourhood of the solution $\xi$ of $f(x) = 0$, and that $f'(\xi) > 0$ and $f''(\xi) > 0$, define}
+\begin{equation*}
+    \varphi(x_k, x_{k-1}) = \frac{x_{k+1} - \xi}{(x_k - \xi)(x_{k-1} - \xi)}
+\end{equation*}
+\textit{where $x_{k+1}$ has been expressed in terms of $x_k$ and $x_{k-1}$. Find an expression for}
+\begin{equation*}
+    \psi(x_{k-1}) = \lim_{x_k \to \xi} \varphi(x_k, x_{k-1})
+\end{equation*}
+\textit{and determine $\lim_{x_{k-1} \to \xi} \psi(x_{k-1})$.}
+
+Observe that
+\begin{align*}
+    \psi(x_{k-1}) &= \lim_{x_k \to \xi} \varphi(x_k, x_{k-1}) \\
+    &= \lim_{x_k \to \xi} \frac{x_{k+1} - \xi}{(x_k - \xi)(x_{k-1} - \xi)} \\
+    &= \lim_{x_k \to \xi} \frac{\frac{x_k f(x_{k-1}) - x_{k-1} f(x_k)}{f(x_{k-1}) - f(x_k)} - \xi}{(x_k - \xi)(x_{k-1} - \xi)} \\
+    &= \lim_{x_k \to \xi}
+    \frac{
+        \frac{x_k f(x_{k-1}) - x_{k-1} f(x_k) - \xi(f(x_{k-1}) - f(x_k))}
+        {f(x_{k-1}) - f(x_k)}}
+    {(x_k - \xi)(x_{k-1} - \xi)} \\
+    &= \lim_{x_k \to \xi}
+    \frac{
+        x_k f(x_{k-1}) - x_{k-1} f(x_k) - \xi(f(x_{k-1}) - f(x_k))}
+    {(x_k - \xi)(x_{k-1} - \xi)(f(x_{k-1}) - f(x_k))} \\
+    &= \lim_{x_k \to \xi}
+    \frac{
+        f(x_{k-1})(x_k - \xi) - f(x_k)(x_{k-1} - \xi)}
+    {(x_k - \xi)(x_{k-1} - \xi)(f(x_{k-1}) - f(x_k))} \\
+\end{align*}
+
+This is a $0/0$-case, so we can use L'Hôpital's rule to get further:
+\begin{align*}
+    \psi(x_{k-1}) 
+    &= \lim_{x_k \to \xi}
+    \frac{
+        f(x_{k-1})(x_k - \xi) - f(x_k)(x_{k-1} - \xi)}
+    {(x_k - \xi)(x_{k-1} - \xi)(f(x_{k-1}) - f(x_k))} \\
+    &= \lim_{x_k \to \xi}
+    \frac{\frac{d}{d x_k}
+        f(x_{k-1})(x_k - \xi) - \frac{d}{d x_k}f(x_k)(x_{k-1} - \xi)}
+    {\frac{d}{d x_k}(x_k - \xi)(x_{k-1} - \xi)(f(x_{k-1}) - f(x_k))} \\
+    &= \lim_{x_k \to \xi}
+    \frac{
+        f(x_{k-1}) - f'(x_k)(x_{k-1} - \xi)}
+    {(x_{k-1} - \xi)(f(x_{k-1}) - f(x_k)) - (x_k - \xi)(x_{k-1} - \xi)f'(x_k))} \\
+    &= \lim_{x_k \to \xi}
+    \frac{
+        f(x_{k-1}) - f'(x_k)(x_{k-1} - \xi)}
+    {(x_{k-1} - \xi)(f(x_{k-1}) - f(x_k)) - (x_k - \xi)(x_{k-1} - \xi)f'(x_k))} \\
+    &= \frac{
+        f(x_{k-1}) - f'(\xi)(x_{k-1} - \xi)}
+    {(x_{k-1} - \xi)f(x_{k-1})} \\
+\end{align*}
+
+We can then determine
+\begin{align*}
+    \lim_{x_{k-1} \to \xi} \psi(x_{k-1}) &= \lim_{x_{k-1} \to \xi} \frac{
+        f(x_{k-1}) - f'(\xi)(x_{k-1} - \xi)}
+    {(x_{k-1} - \xi)f(x_{k-1})} \\
+\end{align*}
+
+This is, once more, a $0/0$-case, and we once more apply L'Hôpitals method
+\begin{align*}
+    \lim_{x_{k-1} \to \xi} \psi(x_{k-1})
+    &= \lim_{x_{k-1} \to \xi} \frac{
+        f(x_{k-1}) - f'(\xi)(x_{k-1} - \xi)}
+    {(x_{k-1} - \xi)f(x_{k-1})} \\
+    &= \lim_{x_{k-1} \to \xi}
+    \frac{\frac{d}{d x_{k-1}}
+        f(x_{k-1}) - \frac{d}{d x_{k-1}}f'(\xi)(x_{k-1} - \xi)}
+    {\frac{d}{d x_{k-1}}(x_{k-1} - \xi)f(x_{k-1})} \\
+    &= \lim_{x_{k-1} \to \xi}
+    \frac{
+        f'(x_{k-1}) - f'(\xi)}
+    {f(x_{k-1}) + (x_{k-1} - \xi)f'(x_{k-1})} \\
+\end{align*}
+
+This is, once more, a $0/0$-case, and we once more apply L'Hôpitals method
+\begin{align*}
+    \lim_{x_{k-1} \to \xi} \psi(x_{k-1})
+    &= \lim_{x_{k-1} \to \xi}
+    \frac{
+        f'(x_{k-1}) - f'(\xi)}
+    {f(x_{k-1}) + (x_{k-1} - \xi)f'(x_{k-1})} \\
+    &= \lim_{x_{k-1} \to \xi}
+    \frac{\frac{d}{d x_{k-1}}
+        f'(x_{k-1}) - \frac{d}{d x_{k-1}}f'(\xi)}
+    {\frac{d}{d x_{k-1}}f(x_{k-1}) + \frac{d}{d x_{k-1}}(x_{k-1} - \xi)f'(x_{k-1})} \\
+    &= \lim_{x_{k-1} \to \xi}
+    \frac{
+        f''(x_{k-1})}
+    {f'(x_{k-1}) + f'(x_{k-1}) + (x_{k-1} - \xi)f''(x_{k-1})} \\
+    &= \frac{
+        f''(\xi)}
+    {f'(\xi) + f'(\xi)} \\
+    &= \frac{
+        f''(\xi)}
+    {2f'(\xi)} \\
+\end{align*}
+
+\textit{Deduce that}
+\begin{equation*}
+    \lim_{x_k, x_{k-1} \to \xi} \varphi(x_k, x_{k-1}) = f''(\xi) / 2f'(\xi)
+\end{equation*}
+
+This follows from our previous calculation:
+\begin{align*}
+    \lim_{x_k, x_{k-1} \to \xi} \varphi(x_k, x_{k-1}) &= \lim_{x_{k-1} \to \xi} \lim_{x_k \to \xi} \varphi(x_k, x_{k-1}) \\
+    &= \lim_{x_k \to \xi} \psi(x_{k-1}) \\
+    &= \frac{f''(\xi)}{2f'(\xi)} \\
+\end{align*}
+
+
+\textit{Now assume that}
+\begin{equation*}
+    \lim_{k \to \infty} \frac{\abs{x_{k+1} - \xi}}{\abs{x_k - \xi}^q} = A
+\end{equation*}
+\textit{Show that $q - 1 - 1/q = 0$, and hence that $q = \frac{1}{2} (1 + \sqrt{5})$. Deduce finally that}
+\begin{equation*}
+    \lim_{k \to \infty} \frac{\abs{x_{k+1} - \xi}}{\abs{x_k - \xi}^q} = \left( \frac{f''(\xi)}{2f'(\xi)} \right)^{q / (1+q)}
+\end{equation*}
