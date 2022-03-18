@@ -1,0 +1,267 @@
+\section{Problem 3}
+\textit{A Householder transformation is a matrix $P$ of size $m \times m$ defined in terms of the vector $w \in \mathbb{R}^m$ with Euclidean norm $\norm{w}_2 = 1$ and the $m \times m$ identity matrix $I$:}
+\begin{equation}
+\label{eq:Householder}
+    P := I - 2 w w^T
+\end{equation}
+\textit{Householder transformations can be used to compute the QR-decomposition of a matrix $A$ by finding $P_1, ... , P_k$ such that $P_k ... P_1 A$ is upper triangular. The successive multiplication with the $P_i$s results in eliminating entries in the lower triangular part of $A$.}
+
+
+\subsection{3.1}
+\textit{Compute the eigenvalues, eigenvectors as well as the determinant of a Householder transformation. Provide detailed computations and arguments.}
+
+We look at a $3 \times 3$ Householder transformation, created by the vector $w = [w_1, w_2, w_3]^T$. This gives the Householder matrix
+\begin{equation*}
+    P = \begin{bmatrix}
+        1 - 2 w_1^2 & -2 w_1 w_2 & -2 w_1 w_3 \\
+        -2 w_1 w_2 & 1 - 2 w_2^2 & -2 w_2 w_3 \\
+        -2 w_1 w_3 & -2 w_2 w_3 & 1 - 2 w_3^2 \\
+    \end{bmatrix}
+\end{equation*}
+
+To find the eigenvalues of $P$, we find the determinant of $P - \lambda I$:
+\begin{align*}
+    |P - \lambda I| &= \abs{\begin{bmatrix}
+        1 - 2 w_1^2 - \lambda & -2 w_1 w_2 & -2 w_1 w_3 \\
+        -2 w_1 w_2 & 1 - 2 w_2^2 - \lambda & -2 w_2 w_3 \\
+        -2 w_1 w_3 & -2 w_2 w_3 & 1 - 2 w_3^2 - \lambda\\
+    \end{bmatrix}} \\
+    &= (1 - 2 w_1^2 - \lambda)((1 - 2 w_2^2 - \lambda)(1 - 2 w_3^2 - \lambda) - (-2 w_2 w_3)(-2 w_2 w_3)) \\
+    &\quad - (-2 w_1 w_2)((-2 w_1 w_2)(1 - 2 w_3^2 - \lambda) - (-2 w_2 w_3)(-2 w_1 w_3)) \\
+    &\quad + (-2 w_1 w_3)((-2 w_1 w_2)(-2 w_2 w_3) - (1 - 2 w_2^2 - \lambda)(-2 w_1 w_3)) \\
+    &= (1 - 2w_1^2 - \lambda)(1 - 2w_2^2 - 2w_3^2 + \lambda (-2 + 2w_2^2 + 2w_3^2) + \lambda^2) \\
+    &\quad - (-2w_1w_2)(-2w_1w_2 + \lambda 2w_1w_2) \\
+    &\quad + (-2w_1w_3)(2w_1w_3 - \lambda 2w_1w_3) \\
+    &= -\lambda^3 + \lambda^2 (3 - 2(w_1^2 + w_2^2 + w_3^2)) + \lambda (-3 + 4(w_1^2 + w_2^2 + w_3^2 - 4w_1^2 w_2^2 - 4w_1^2 w_3^2)) \\
+    &\quad + 1 - 2(w_1^2 + w_2^2 + w_3^2) + 4w_1^2 w_2^2 + 4w_1^2 w_3^2 - 4w_1^2 w_2^2 + 4\lambda w_1^2 w_2^2 - 4w_1^2 w_3^2 + 4\lambda w_1^2 w_3^2 \\
+    &= -\lambda^3 + \lambda^2 (3 - 2(w_1^2 + w_2^2 + w_3^2)) + \lambda (-3 + 4(w_1^2 + w_2^2 + w_3^2)) + 1 - 2(w_1^2 + w_2^2 + w_3^2)
+\end{align*}
+Note that we have $\norm{w}_2 = 1$, thus $w_1^2 + w_2^2 + w_3^2 = 1$. Observe that
+\begin{align*}
+    |P - \lambda I| &= -\lambda^3 + \lambda^2 (3 - 2(w_1^2 + w_2^2 + w_3^2)) + \lambda (-3 + 4(w_1^2 + w_2^2 + w_3^2)) + 1 - 2(w_1^2 + w_2^2 + w_3^2) \\
+    &= -\lambda^3 + \lambda^2 (3 - 2) + \lambda (-3 + 4) + 1 - 2 \\
+    &= -\lambda^3 + \lambda^2 + \lambda - 1
+\end{align*}
+We set $|P - \lambda I| = 0$ to find the eigenvalues of $P$:
+\begin{align*}
+    |P - \lambda I| &= 0 \\
+    -\lambda^3 + \lambda^2 + \lambda - 1 &= 0 \\
+    -(\lambda - 1)(\lambda - 1)(\lambda + 1) &= 0 \\
+\end{align*}
+
+This gives us two eigenvalues of $P$:
+\begin{itemize}
+    \item $\lambda_1 = 1$ (with multiplicity 2)
+    \item $\lambda_2 = -1$ (with multiplicity 1)
+\end{itemize}
+
+To find the eigenvectors of $P$, we solve the following equation for $v = [v_1, v_2, v_3]^T$, using both values of $\lambda$:
+\begin{equation}
+    (P - \lambda I)v = 0
+\end{equation}
+\begin{align*}
+    (P - \lambda_1 I)v = \begin{bmatrix}
+        - 2 w_1^2 & -2 w_1 w_2 & -2 w_1 w_3 \\
+        -2 w_1 w_2 & - 2 w_2^2 & -2 w_2 w_3 \\
+        -2 w_1 w_3 & -2 w_2 w_3 & - 2 w_3^2\\
+    \end{bmatrix} \begin{bmatrix}
+        v_1 \\ v_2 \\ v_3 \\
+    \end{bmatrix} &= \begin{bmatrix}
+        0 \\ 0 \\ 0 \\
+    \end{bmatrix} \\  
+    \begin{bmatrix}
+        -2w_1^2 v_1 - 2w_1 w_2 v_2 - 2w_1 w_3 v_3 \\
+        -2w_1 w_2 v_1 - 2w_2^2 v_2 - 2w_2 w_3 v_3 \\
+        -2w_1 w_3 v_1 - 2w_2 w_3 v_2 - 2w_3^2 v_3 \\
+    \end{bmatrix} &= \begin{bmatrix}
+        0 \\ 0 \\ 0 \\
+    \end{bmatrix} \\ 
+    \begin{bmatrix}
+        -2w_1 (w_1 v_1 + w_2 v_2 + w_3 v_3) \\
+        -2w_2 (w_1 v_1 + w_2 v_2 + w_3 v_3) \\
+        -2w_3 (w_1 v_1 + w_2 v_2 + w_3 v_3) \\
+    \end{bmatrix} &= \begin{bmatrix}
+        0 \\ 0 \\ 0 \\
+    \end{bmatrix} \\ 
+\end{align*}
+Because we cannot have $w_1 = w_2 = w_3 = 0$, because $\norm{w}_2 = 1$, we see
+\begin{equation*}
+    \begin{bmatrix}
+        w_1 v_1 + w_2 v_2 + w_3 v_3 \\
+        w_1 v_1 + w_2 v_2 + w_3 v_3 \\
+        w_1 v_1 + w_2 v_2 + w_3 v_3 \\
+    \end{bmatrix} = \begin{bmatrix}
+        0 \\ 0 \\ 0 \\
+    \end{bmatrix}
+\end{equation*}
+We can thus let $v_2$ and $v_3$ be any values we want, i.e. let $v_2 = v_3 = 1$, and $v$ is an eigenvector for $P$ when
+\begin{equation*}
+    v_1 = \frac{w_2 v_2 + w_3 v_3}{w_1} = \frac{w_2 + w_3}{w_1}
+\end{equation*}
+
+\begin{align*}
+    (P - \lambda_2 I)v = \begin{bmatrix}
+        2 - 2 w_1^2 & -2 w_1 w_2 & -2 w_1 w_3 \\
+        -2 w_1 w_2 & 2 - 2 w_2^2 & -2 w_2 w_3 \\
+        -2 w_1 w_3 & -2 w_2 w_3 & 2 - 2 w_3^2\\
+    \end{bmatrix} \begin{bmatrix}
+        v_1 \\ v_2 \\ v_3 \\
+    \end{bmatrix} &= \begin{bmatrix}
+        0 \\ 0 \\ 0 \\
+    \end{bmatrix} \\  
+    \begin{bmatrix}
+        (2-2w_1^2) v_1 - 2w_1 w_2 v_2 - 2w_1 w_3 v_3 \\
+        -2w_1 w_2 v_1 + (2-2w_2^2) v_2 - 2w_2 w_3 v_3 \\
+        -2w_1 w_3 v_1 - 2w_2 w_3 v_2 + (2-2w_3^2) v_3 \\
+    \end{bmatrix} &= \begin{bmatrix}
+        0 \\ 0 \\ 0 \\
+    \end{bmatrix} \\ 
+    \begin{bmatrix}
+        2v_1 - 2w_1^2 v_1 - 2w_1 w_2 v_2 - 2w_1 w_3 v_3 \\
+        -2w_1 w_2 v_1 + 2v_2 - 2w_2^2 v_2 - 2w_2 w_3 v_3 \\
+        -2w_1 w_3 v_1 - 2w_2 w_3 v_2 + 2v_3 - 2w_3^2 v_3 \\
+    \end{bmatrix} &= \begin{bmatrix}
+        0 \\ 0 \\ 0 \\
+    \end{bmatrix} \\ 
+    \begin{bmatrix}
+        2v_1 -2w_1 (w_1 v_1 + w_2 v_2 + w_3 v_3) \\
+        2v_2 -2w_2 (w_1 v_1 + w_2 v_2 + w_3 v_3) \\
+        2v_3 -2w_3 (w_1 v_1 + w_2 v_2 + w_3 v_3) \\
+    \end{bmatrix} &= \begin{bmatrix}
+        0 \\ 0 \\ 0 \\
+    \end{bmatrix} \\ 
+    \begin{bmatrix}
+        w_1 (w_1 v_1 + w_2 v_2 + w_3 v_3) \\
+        w_2 (w_1 v_1 + w_2 v_2 + w_3 v_3) \\
+        w_3 (w_1 v_1 + w_2 v_2 + w_3 v_3) \\
+    \end{bmatrix} &= \begin{bmatrix}
+        v_1 \\ v_2 \\ v_3 \\
+    \end{bmatrix} \\ 
+    \begin{bmatrix}
+        w_1 v_1 + w_2 v_2 + w_3 v_3 \\
+        w_1 v_1 + w_2 v_2 + w_3 v_3 \\
+        w_1 v_1 + w_2 v_2 + w_3 v_3 \\
+    \end{bmatrix} &= \begin{bmatrix}
+        v_1 / w_1 \\ v_2 / w_2 \\ v_3 / w_3 \\
+    \end{bmatrix} \\ 
+\end{align*}
+We then have that 
+\begin{equation*}
+    \frac{v_1}{w_1} = \frac{v_2}{w_2} = \frac{v_3}{w_3} = w_1 v_1 + w_2 v_2 + w_3 v_3
+\end{equation*}
+With some refactoring, observe that
+\begin{align*}
+    v_1 &= \frac{v_3 * w_1}{w_3} \\
+    v_2 &= \frac{v_3 * w_2}{w_3} \\
+\end{align*}
+We can therefore select any value for $v_3$, and compute a complete eigenvector $v$.
+
+We have found the following eigenvectors for $P$, with their respective eigenvalues:
+\begin{itemize}
+    \item $v_1 = [\frac{w_2 + w_3}{w_1}, 1, 1]^T$
+    \item $v_2 = [\frac{w_1}{w_3}, \frac{w_2}{w_3}, 1]^T$
+\end{itemize}
+
+The determinant of the matrix $P$ is simply the product of its eigenvalues. In our case, the determinant of $P$ is given as
+\begin{equation*}
+    \det (P) = \lambda_1 * \lambda_1 * \lambda_2 = 1 * 1 * (-1) = -1
+\end{equation*}
+
+
+
+\subsection{3.2}
+\textit{Use Householder transformation to compute the QR-decomposition of the matrix}
+\begin{equation*}
+    A = \begin{bmatrix}
+        4 & -2 & 7 \\
+        6 & 2 & -3 \\
+        3 & 4 & 4 \\
+    \end{bmatrix}
+\end{equation*}
+We want to start by pivoting the first column. Let $a_1 = $ the first column of $A = [4, 6, 3]^T$, $\alpha_1 = \norm{a_1}_2 = \sqrt{4^2 + 6^2 + 3^2} = \sqrt{61} = 7.8102$. We continue by letting $u_1$ be the vector given by $u_1 = a_1 + \text{sign}(A_{11})\alpha_1 e_1 = [11.8102, 6, 3]^T$, and let $v_1 = u_1 / \norm{u_1}_2 = u_1 /13.5824 = [0.8695, 0.4417, 0.2209]^T$. We use $v_1$ as a basis for the first Householder transformation matrix, and get
+\begin{align*}
+    Q_1 &= I - 2v_1 v_1^T \\
+    &= I - 2\begin{bmatrix}
+        0.7560 & 0.3841 & 0.1921 \\
+        0.3841 & 0.1951 & 0.0976 \\
+        0.1921 & 0.0976 & 0.0488 \\
+    \end{bmatrix} \\
+    &= \begin{bmatrix}
+        -0.5120 & -0.7682 & -0.3842 \\
+        -0.7682 & 0.6098 & -0.1952 \\
+        -0.3842 & -0.1952 & 0.9024 \\
+    \end{bmatrix}
+\end{align*}
+Observe that
+\begin{equation*}
+    Q_1 A = \begin{bmatrix}
+        -7.8102 & -2.0486 & -2.8168 \\
+        0 & 1.9753 & -7.9873 \\
+        0 & 3.9877 & 1.5064 \\
+    \end{bmatrix}
+\end{equation*}
+
+We remove the first row and first column of $A$, getting $A_2 = \begin{bmatrix}
+    1.9753 & -7.9873 \\ 3.9877 & 1.5064 \\
+\end{bmatrix}$. We repeat the process, getting the following
+\begin{align*}
+    a_2 &= \begin{bmatrix}
+        1.9753 \\ 3.9877
+    \end{bmatrix} \\
+    \alpha_2 &= \norm{a_2}_2 = \sqrt{1.9752^2 + 3.9877^2} = 4.4501 \\
+    u_2 &= a_2 + \text{sign}(A_{11}) \alpha_2 e_1 = \begin{bmatrix}
+        1.9753 \\ 3.9877
+    \end{bmatrix} + 4.4501 \begin{bmatrix}
+        1 \\ 0
+    \end{bmatrix} = \begin{bmatrix}
+        6.4254 \\ 3.9877
+    \end{bmatrix} \\
+    v_2 &= \frac{u_2}{\norm{u_2}_2} = \frac{u_1}{7.5622} = \begin{bmatrix}
+        0.8497 \\ 0.5273
+    \end{bmatrix}
+\end{align*}
+We use $v_2$ as a basis for the second Household matrix, and get
+\begin{equation*}
+    Q_2 = I - 2v_2 v_2^T = \begin{bmatrix}
+        -0.4439 & -0.8961 \\
+        -0.8961 & 0.4439
+    \end{bmatrix}
+\end{equation*}
+We observe that
+\begin{equation*}
+    Q_2 A_2 = \begin{bmatrix}
+        1.9753 & -7.9873 \\
+        3.9877 & 1.5064 \\
+    \end{bmatrix}\begin{bmatrix}
+        -0.4439 & -0.8961 \\
+        -0.8961 & 0.4439
+    \end{bmatrix} = \begin{bmatrix}
+        -4.4501 & 2.1956 \\
+        0 & 7.8259 \\
+    \end{bmatrix}
+\end{equation*}
+To get a $3 \times 3$ matrix, we fill this in with $1$ along the diagonal, and $0$ elsewhere.
+
+We now have a complete QR decomposition using Householder transformations, where
+\begin{align*}
+    Q_1 &= \begin{bmatrix}
+        -0.5120 & -0.7682 & -0.3842 \\
+        -0.7682 & 0.6098 & -0.1952 \\
+        -0.3842 & -0.1952 & 0.9024 \\
+    \end{bmatrix} \\
+    Q_2 &= \begin{bmatrix}
+        1 & 0 & 0 \\
+        0 & -0.4439 & -0.8961 \\
+        0 & -0.8961 & 0.4439
+    \end{bmatrix} \\
+    Q &= Q1 Q2 = \begin{bmatrix}
+        -0.5120 & 0.6852 & 0.5179 \\
+        -0.7682 & -0.0958 & -0.6330 \\
+        -0.3842 & -0.7220 & 0.5754 \\
+    \end{bmatrix} \\
+    QA &= \begin{bmatrix}
+        -7.8102 & -2.0486 & -2.8168 \\
+        0 &  -4.4501 & 2.1965 \\
+        0 & 0 & 7.8259 \\
+    \end{bmatrix}
+\end{align*}

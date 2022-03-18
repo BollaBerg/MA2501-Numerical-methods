@@ -1,0 +1,112 @@
+\section{Problem 2}
+\textit{In this problem we want to prove that the method of divided differences actually gives us the correct Newton form. Consider the Lagrange interpolation problem with given interpolation points $x_i\ , i = 0, ... , n$ and we want to construct a polynomial $p_n \in P_n$ such that}
+\begin{equation*}
+    p_n (x_i) = f(x_i) \ \text{for} \ i = 0, ..., n
+\end{equation*}
+\textit{for a given function $f$. The Newton form of polynomial $p_n$ is given by the following form:}
+\begin{align*}
+    p_n(x) &= a_0 + a_1 (x - x_0) + a_2 (x - x_0)(x - x_1) + ... + a_n (x - x_0) \dots (x - x_{n-1}) \\
+    &= \sum_{k=0}^{n} a_k \omega_k(x),
+\end{align*}
+\textit{where $\omega_k(x) = \prod_{j=0}^{k-1} (x - x_j)$. These coefficients $a_k$ need to be determined from values of $x_i$ and $f(x_i)$. The following way of determining coefficients $a_k$ is called "divided differences". Define an operation $[x_0]f := f(x_0)$ and the following operations recursively for $k = 1, ..., n$:}
+\begin{equation*}
+    [x_0, x_1, ..., x_k] f := \frac{[x_1, x_2, ..., x_k] f - [x_0, x_1, ..., x_{k-1}] f}{x_k - x_0}
+\end{equation*}
+\textit{Note that on the left hand side, the number of arguments in the bracket $[...]$ is $k + 1$ wheras on the right hand side the number of arguments is $k$. Then the coefficients are given by}
+\begin{equation*}
+    a_k = [x_0, x_1, ..., x_k] f,\ \text{for} \ k = 0, ..., n - 1
+\end{equation*}
+
+
+
+\subsection{2.a}
+\textit{We are going to prove the above way of calculating $a_k$ gives us the correct Newton form, by induction. Assume that for some fixed $n = m$, the Newton form with coefficients (2) solves the interpolation problem for any distinct interpolation point sets $(x_0, ... , x_m)$ and any given function $f$,
+i.e., $p_m(x_i) = f(x_i)$ for $i = 0, ... , m$. Using this induction hypothesis, prove the following: if we add one more point $x_{m+1}$ for the Lagrange interpolation problem, then the solution $p_{m+1}$ can be written as}
+\begin{equation}
+\label{eq:2a}
+    p_{m+1}(x) = \frac{x_{m+1} - x}{x_{m+1} - x_0} p_m(x) + \frac{x - x_0}{x_{m+1} - x_0} q_m(x)
+\end{equation}
+\textit{where $q_m \in P_m$ is the solution of the Lagrange interpolation problem with the interpolation points $(x_1, ... , x_{m+1})$, and the leading coefficient of $p_{m+1}$ is given by}
+\begin{equation}
+\label{eq:2a-coeff}
+    \frac{[x_1, x_2, ..., x_{m+1}] f - [x_0, x_1, ..., x_m] f}{x_m - x_0}
+\end{equation}
+
+For equation \eqref{eq:2a} to be a solution, it must hold that $p_{m+1}(x_i) = f(x_i)$ for $i = 0, 1, ..., m+1$.
+
+We know from the information given that $p_m(x_i) = f(x_i)$ for $x = 0, 1, ..., m$, and that $q_m(x_i) = f(x_i)$ for $x = 1, 2, ..., m+1$.
+
+Observe for $i = 0$:
+\begin{align*}
+    p_{m+1}(x_0) &= \frac{x_{m+1} - x_0}{x_{m+1} - x_0} p_m(x_0) + \frac{x_0 - x_0}{x_{m+1} - x_0} q_m(x_0) \\
+    &= p_m(x_0) - 0 = p_m(x_0) = f(x_0)
+\end{align*}
+
+For $i = m+1$
+\begin{align*}
+    p_{m+1}(x_{m+1}) &= \frac{x_{m+1} - x_{m+1}}{x_{m+1} - x_0} p_m(x_{m+1}) + \frac{x_{m+1} - x_0}{x_{m+1} - x_0} q_m(x_{m+1}) \\
+    &= 0 + q_m(x_{m+1}) = f(x_{m+1})
+\end{align*}
+
+For $i \in [1, 2, ..., m]$
+\begin{align*}
+    p_{m+1}(x_i) &= \frac{x_{m+1} - x_i}{x_{m+1} - x_0} p_m(x_i) + \frac{x_i - x_0}{x_{m+1} - x_0} q_m(x_i) \\
+    &= \frac{x_{m+1} - x_i}{x_{m+1} - x_0} f(x_i) + \frac{x_i - x_0}{x_{m+1} - x_0} f(x_i) \\
+    &= \frac{x_{m+1} - x_i + x_i - x_0}{x_{m+1} - x_0} f(x_i) \\
+    &= \frac{x_{m+1} - x_0}{x_{m+1} - x_0} f(x_i) = f(x_i)
+\end{align*}
+
+As the formula satisfies all requirements for being a solution to the problem, we have proven that equation \eqref{eq:2a} is one way to write the solution.
+
+From our induction hypothesis, we know that $p_m$ has the leading coefficient of $[x_0, x_1, ..., x_m]f$ and $q_m$ has a leading coefficient of $[x_1, x_2, ..., x_{m+1}]f$. Note the sign of $x$ in equation \eqref{eq:2a}, giving us negative leading coefficient for $p_m$ and positive leading coefficient of $q_m$. Note also that the constants in the numerator is ignored when calculating the leading coefficient. With this in mind, we can calculate the leading coefficient of $p_{m+1}$ as
+\begin{align*}
+    \text{Leading coefficient}_{p_{m+1}} &= \frac{-[x_0, x_1, ..., x_m]f + [x_1, x_2, ..., x_{m+1}]f}{x_{m+1} - x_0} \\
+    &= \frac{[x_1, x_2, ..., x_{m+1}]f - [x_0, x_1, ..., x_m]f}{x_{m+1} - x_0} \\
+    \text{which, from the definition given above equals} \\
+    &= [x_0, x_1, ..., x_{m+1}] f
+\end{align*}
+This satisfies the equation in \eqref{eq:2a-coeff}, thus finishing the proof.
+
+
+
+\subsection{2.b}
+\textit{Check if the induction hypothesis for $m = 0$ is true, and by the above argument, conclude that divided difference gives us the correct Newton form. Thus, the Newton form is useful when one wants to add interpolation points one by one recursively.}
+
+Observe that
+\begin{equation*}
+    p_0(x) = a_0
+\end{equation*}
+As we want $p_n(x_i) = f(x_i)$, we have $p_0(x_0) = f(x_0)$. Thus
+\begin{equation*}
+    p_0(x) = a_0 = f(x_0)
+\end{equation*}
+For the induction hypothesis to hold, we must prove that $a_0 = [x_0]f$. By definition, we have
+\begin{equation*}
+    [x_0]f = f(x_0) = a_0,
+\end{equation*}
+so the induction hypothesis holds.
+
+From problem 2.a and this, we can conclude that divided differences gives us the correct Newton form.
+
+
+
+\subsection{2.c}
+\textit{Prove that for any $n$ the interpolation error can be written by}
+\begin{equation*}
+    f(x) - p_n(x) = [x_0, x_1, ..., x_n, x] f \omega_{n+1}(x)
+\end{equation*}
+Let $p_{n+1}$ be an extension of function $p_n$, where we have added the point $x$ to the interpolation points such that $f(x) = p_{n+1}(x)$. The error in point $x$ is thus 0 for function $p_{n+1}$, and we can rewrite the error as
+\begin{align*}
+    f(x) - p_n(x) &= p_{n+1}(x) - p_n(x) \\
+    &= \sum_{k=0}^{n+1} a_k \omega_k(x) - \sum_{k=0}^{n} a_k \omega_k(x) \\
+    &= a_{n+1} \omega_{n+1}(x),
+\end{align*}
+which, as proven earlier, is the same as
+\begin{equation*}
+    a_{n+1} \omega_{n+1}(x) = [x_0, x_1, ..., x_n, x_{n+1}] f \omega_{n+1}(x)
+\end{equation*}
+
+Note that we defined $p_{n+1}$ with $x_{n+1} = x$, so we have
+\begin{equation*}
+    f(x) - p_n(x) = [x_0, x_1, ..., x_n, x] f \omega_{n+1}(x) \quad \qedsymbol
+\end{equation*}
