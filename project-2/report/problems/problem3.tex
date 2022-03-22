@@ -178,9 +178,9 @@ The determinant of the matrix $P$ is simply the product of its eigenvalues. In o
         3 & 4 & 4 \\
     \end{bmatrix}
 \end{equation*}
-We want to start by pivoting the first column. Let $a_1 = $ the first column of $A = [4, 6, 3]^T$, $\alpha_1 = \norm{a_1}_2 = \sqrt{4^2 + 6^2 + 3^2} = \sqrt{61} = 7.8102$. We continue by letting $u_1$ be the vector given by $u_1 = a_1 + \text{sign}(A_{11})\alpha_1 e_1 = [11.8102, 6, 3]^T$, and let $v_1 = u_1 / \norm{u_1}_2 = u_1 /13.5824 = [0.8695, 0.4417, 0.2209]^T$. We use $v_1$ as a basis for the first Householder transformation matrix, and get
+We want to start by pivoting the first column. Let $a_1 = $ the first column of $A = [4, 6, 3]^T$, and let $\alpha_1 = \norm{a_1}_2 = \sqrt{4^2 + 6^2 + 3^2} = \sqrt{61} = 7.8102$. We continue by letting $u_1$ be the vector given by $u_1 = a_1 + \text{sign}(A_{11})\alpha_1 e_1 = [11.8102, 6, 3]^T$, and let $v_1 = u_1 / \norm{u_1}_2 = u_1 /13.5824 = [0.8695, 0.4417, 0.2209]^T$. We use $v_1$ as a basis for the first Householder transformation matrix, and get
 \begin{align*}
-    Q_1 &= I - 2v_1 v_1^T \\
+    P_1 &= I - 2v_1 v_1^T \\
     &= I - 2\begin{bmatrix}
         0.7560 & 0.3841 & 0.1921 \\
         0.3841 & 0.1951 & 0.0976 \\
@@ -194,7 +194,7 @@ We want to start by pivoting the first column. Let $a_1 = $ the first column of 
 \end{align*}
 Observe that
 \begin{equation*}
-    Q_1 A = \begin{bmatrix}
+    P_1 A = \begin{bmatrix}
         -7.8102 & -2.0486 & -2.8168 \\
         0 & 1.9753 & -7.9873 \\
         0 & 3.9877 & 1.5064 \\
@@ -222,14 +222,14 @@ We remove the first row and first column of $A$, getting $A_2 = \begin{bmatrix}
 \end{align*}
 We use $v_2$ as a basis for the second Household matrix, and get
 \begin{equation*}
-    Q_2 = I - 2v_2 v_2^T = \begin{bmatrix}
+    P_2 = I - 2v_2 v_2^T = \begin{bmatrix}
         -0.4439 & -0.8961 \\
         -0.8961 & 0.4439
     \end{bmatrix}
 \end{equation*}
 We observe that
 \begin{equation*}
-    Q_2 A_2 = \begin{bmatrix}
+    P_2 A_2 = \begin{bmatrix}
         1.9753 & -7.9873 \\
         3.9877 & 1.5064 \\
     \end{bmatrix}\begin{bmatrix}
@@ -244,22 +244,22 @@ To get a $3 \times 3$ matrix, we fill this in with $1$ along the diagonal, and $
 
 We now have a complete QR decomposition using Householder transformations, where
 \begin{align*}
-    Q_1 &= \begin{bmatrix}
+    P_1 &= \begin{bmatrix}
         -0.5120 & -0.7682 & -0.3842 \\
         -0.7682 & 0.6098 & -0.1952 \\
         -0.3842 & -0.1952 & 0.9024 \\
     \end{bmatrix} \\
-    Q_2 &= \begin{bmatrix}
+    P_2 &= \begin{bmatrix}
         1 & 0 & 0 \\
         0 & -0.4439 & -0.8961 \\
         0 & -0.8961 & 0.4439
     \end{bmatrix} \\
-    Q &= Q1 Q2 = \begin{bmatrix}
+    P &= P_1 P_2 = \begin{bmatrix}
         -0.5120 & 0.6852 & 0.5179 \\
         -0.7682 & -0.0958 & -0.6330 \\
         -0.3842 & -0.7220 & 0.5754 \\
     \end{bmatrix} \\
-    QA &= \begin{bmatrix}
+    PA &= \begin{bmatrix}
         -7.8102 & -2.0486 & -2.8168 \\
         0 &  -4.4501 & 2.1965 \\
         0 & 0 & 7.8259 \\
