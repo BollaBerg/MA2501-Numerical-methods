@@ -1,0 +1,96 @@
+\subsection{Task 2}
+\textit{The same procedure works for unbounded domain, e.g. $\mathbb{R} = (-\infty, \infty)$. Consider $w(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2 / 2}$ for $x \in \mathbb{R}$. Given $\varphi_0 = 1$, construct $\varphi_1, \varphi_2$ and $\varphi_3$. You can use the following without proof:}
+\begin{equation}
+\label{eq:gram-schmidt-weight}
+    \int_{-\infty}^\infty w(x) x^k dx = \begin{cases}
+        0, & \text{if } k \text{ is odd}, \\
+        k!! = k(k-2)..., & \text{if } k \text{ is even}
+    \end{cases}
+\end{equation}
+
+We use the same procedure as for task 1. We start by finding $\tilde{\varphi}_1 = x - c_0\varphi_0(x)$. Recall the definition of the Gram-Schmidt procedure from \eqref{eq:gram-schmidt-definition}.
+\begin{align*}
+    \left< \tilde{\varphi}_1, \varphi_0 \right> = \left<x, \varphi_0 \right> - c_0 \left<\varphi_0, \varphi_0 \right> &= 0 \\
+    \int_{-\infty}^\infty x \varphi_0(x) w(x) dx - c_0 * 1 &= 0\\
+    \int_{-\infty}^\infty x w(x) dx &= c_0 \\
+\end{align*}
+From \eqref{eq:gram-schmidt-weight}, observe that we can rewrite this as
+\begin{equation*}
+     \int_{-\infty}^\infty x w(x) dx = 0 = c_0
+\end{equation*}
+We then have $\tilde{\varphi}_1(x) = x$. To find $\varphi_1$, we use \eqref{eq:gram-schmidt-weight} to find
+\begin{equation*}
+    \norm{\tilde{\varphi}_1}_2^2 = \left< \tilde{\varphi}_1, \tilde{\varphi}_1 \right> = \int_{-\infty}^\infty \tilde{\varphi}_1(x)^2 w(x) dx = \int_{-\infty}^\infty x^2 w(x) dx = 2!! = 2
+\end{equation*}
+This gives us $\varphi_1(x) = \frac{x}{\sqrt{2}}$
+
+
+For $\varphi_2$ we want $d_0$ and $d_1$ such that
+\begin{align*}
+    \tilde{\varphi}_2 = x^2 - d_1 \varphi_1(x) - d_0 \varphi_0(x) \\
+    \left<x^2, \varphi_1 \right> - d_1 \left< \varphi_1, \varphi_1 \right> - d_0 \left< \varphi_0, \varphi_1 \right> = 0 \\
+    \left<x^2, \varphi_0 \right> - d_1 \left< \varphi_1, \varphi_0 \right> - d_0 \left< \varphi_0, \varphi_0 \right> = 0 \\
+\end{align*}
+
+We start with the second equation, using \eqref{eq:gram-schmidt-weight} to find
+\begin{align*}
+    \left<x^2, \varphi_1 \right> - d_1 \left< \varphi_1, \varphi_1 \right> - d_0 \left< \varphi_0, \varphi_1 \right> &= 0 \\
+    \int_{-\infty}^\infty x^2 \varphi_1(x) w(x) dx = \int_{-\infty}^\infty x^2 \frac{x}{\sqrt{2}} w(x) dx &= d_1 \\
+    \frac{1}{\sqrt{2}} \int_{-\infty}^\infty x^3 w(x) dx = \frac{1}{\sqrt{2}}*0 = 0 &= d_1 \\
+\end{align*}
+We do the same for the third equation, and find
+\begin{align*}
+    \left<x^2, \varphi_0 \right> - d_1 \left< \varphi_1, \varphi_0 \right> - d_0 \left< \varphi_0, \varphi_0 \right> &= 0 \\
+    \int_{-\infty}^\infty x^2 \varphi_0(x) w(x) dx = \int_{-\infty}^\infty x^2 w(x) dx = 2!! = 2 &= d_0 \\
+\end{align*}
+We thus have $\tilde{\varphi}_2 = x^2 - 2$. To find $\varphi_2$, we use \eqref{eq:gram-schmidt-weight} to find
+\begin{align*}
+    \norm{\tilde{\varphi}_2}_2^2 &= \left< \tilde{\varphi}_2, \tilde{\varphi}_2 \right> = \int_{-\infty}^\infty \tilde{\varphi}_2(x)^2 w(x) dx = \int_{-\infty}^\infty (x^4 - 4x^2 + 4) w(x) dx \\
+    &= \int_{-\infty}^\infty x^4 w(x) dx - 4\int_{-\infty}^\infty x^2 w(x) dx + 4 \int_{-\infty}^\infty w(x) dx \\
+    &= 4!! - 4 * 2!! + 4 * 0!! = 4 * 2 - 4 * 2 + 4 * 1 = 4
+\end{align*}
+We therefore have $\varphi_2 = \frac{1}{2} x^2 - 1$.
+
+
+For $\varphi_3$ we want to find $e_0, e_1$ and $e_2$ such that
+\begin{align*}
+    \tilde{\varphi}_3 = x^3 - e_2 \varphi_2(x) - e_1 \varphi_1(x) - e_0 \varphi_0(x) \\
+    \left<x^3, \varphi_2 \right> - e_2 \left< \varphi_2, \varphi_2 \right> - e_1 \left< \varphi_1, \varphi_2 \right> - e_0 \left< \varphi_0, \varphi_2 \right> = 0 \\
+    \left<x^3, \varphi_1 \right> - e_2 \left< \varphi_2, \varphi_1 \right> - e_1 \left< \varphi_1, \varphi_1 \right> - e_0 \left< \varphi_0, \varphi_1 \right> = 0 \\
+    \left<x^2, \varphi_0 \right> - e_2 \left< \varphi_2, \varphi_0 \right> - e_1 \left< \varphi_1, \varphi_0 \right> - e_0 \left< \varphi_0, \varphi_0 \right> = 0 \\
+\end{align*}
+We start with the second equation, and use \eqref{eq:gram-schmidt-weight} to see
+\begin{align*}
+    \left<x^3, \varphi_2 \right> - e_2 \left< \varphi_2, \varphi_2 \right> - e_1 \left< \varphi_1, \varphi_2 \right> - e_0 \left< \varphi_0, \varphi_2 \right> &= 0 \\
+    \int_{-\infty}^\infty x^3 \varphi_2 w(x) dx - e_2 &= 0 \\
+    \int_{-\infty}^\infty \left( \frac{1}{2} x^5 - x^3 \right) w(x) dx &= e_2 \\
+    \frac{1}{2} \int_{-\infty}^\infty x^5 w(x) dx - \int_{-\infty}^\infty x^3 w(x) dx = 0 - 0 = 0 &= e_2 \\
+\end{align*}
+For the third equation, we use \eqref{eq:gram-schmidt-weight} to see
+\begin{align*}
+    \left<x^3, \varphi_1 \right> - e_2 \left< \varphi_2, \varphi_1 \right> - e_1 \left< \varphi_1, \varphi_1 \right> - e_0 \left< \varphi_0, \varphi_1 \right> = 0 \\
+    \int_{-\infty}^\infty x^3 \varphi_1 w(x) dx - e_1 &= 0 \\
+    \int_{-\infty}^\infty \frac{1}{\sqrt{2}} x^4 w(x) dx &= e_1 \\
+    \frac{1}{\sqrt{2}} \int_{-\infty}^\infty x^4 w(x) dx = \frac{1}{\sqrt{2}} 4!! = \frac{8}{\sqrt{2}} = 4\sqrt{2} &= e_1 \\
+\end{align*}
+For the last equation, we once more use \eqref{eq:gram-schmidt-weight} to see
+\begin{align*}
+    \left<x^2, \varphi_0 \right> - e_2 \left< \varphi_2, \varphi_0 \right> - e_1 \left< \varphi_1, \varphi_0 \right> - e_0 \left< \varphi_0, \varphi_0 \right> &= 0 \\
+    \int_{-\infty}^\infty x^3 \varphi_0 w(x) dx - e_0 &= 0 \\
+    \int_{-\infty}^\infty x^3 w(x) dx = 0 &= e_0 \\
+\end{align*}
+We thus have $\tilde{\varphi}_3(x) = x^3 - 4\sqrt{2}\varphi_1 = x^3 - 4\sqrt{2} \frac{x}{\sqrt{2}} = x^3 - 4x$. We once more use \eqref{eq:gram-schmidt-weight} to find $\varphi_3$:
+\begin{align*}
+    \norm{\tilde{\varphi}_3}_2^2 &= \left< \tilde{\varphi}_3, \tilde{\varphi}_3 \right> = \int_{-\infty}^\infty \tilde{\varphi}_3(x)^2 w(x) dx = \int_{-\infty}^\infty (x^6 - 8x^4 + 16x^2) w(x) dx \\
+    &= \int_{-\infty}^\infty x^6 w(x) dx - 8 \int_{-\infty}^\infty x^4 w(x) dx + 16 \int_{-\infty}^\infty x^2 w(x) dx \\
+    &= 6!! - 8 * 4!! + 16 * 2!! = (6 * 4 * 2) - (8 * 4 * 2) + (16 * 2) = 16 \\
+\end{align*}
+This gives us $\varphi_3(x) = \frac{1}{4} x^3 - x$.
+
+To conclude, we found that
+\begin{align*}
+    \varphi_0(x) &= 1 \\
+    \varphi_1(x) &= \frac{1}{\sqrt{2}} x \\
+    \varphi_2(x) &= \frac{1}{2} x^2 - 1 \\
+    \varphi_3(x) &= \frac{1}{4} x^3 - x \\
+\end{align*}

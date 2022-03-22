@@ -1,0 +1,153 @@
+\section{Problem 1}
+\textit{The following way of constructing orthogonal polynomials is called \textbf{Gram–Schmidt
+orthogonalisation}:}
+\textit{For a given weight $w(x)$ on $(a, b)$ and the zero-th polynomial $\varphi_0 \in P_0$, we successively construct
+polynomials $\varphi_j \in P_j$ for $j = 1, 2, ...$ such that}
+\begin{equation}
+\label{eq:gram-schmidt-definition}
+    \left< \varphi_j, \varphi_k \right> = \begin{cases}
+        0, & if \ j \ne k, \\
+        1, & if \ j = k, \\
+    \end{cases}
+\end{equation}
+\textit{where the inner product is given by}
+\begin{equation}
+\label{eq:gram-schmidt-inner-product}
+    \left< \varphi_j, \varphi_k \right> := \int_a^b \varphi_j(x) \varphi_k(x) w(x) dx
+\end{equation}
+
+\textit{For instance, $\varphi_1$ is determined by choosing $c_0$ such that}
+\begin{equation}
+\label{eq:varphi1}
+    \tilde{\varphi}_1(x) = x - c_0 \varphi_0(x), \quad \left< \tilde{\varphi}_1, \varphi_0 \right> = \left<x, \varphi_0 \right> - c_0 \left<\varphi_0, \varphi_0 \right> = 0
+\end{equation}
+\textit{After finding such $\tilde{\varphi}_1$, we normalize $\varphi_1 = \tilde{\varphi}_1 / \norm{\tilde{\varphi}_1}_2$ so that $\left<\varphi_1, \varphi_1 \right> = 1$ is satisfied.}
+\textit{For $\varphi_2$, we choose $d_0$ and $d_1$ for $\tilde{\varphi}_2$ of the form}
+\begin{equation*}
+    \tilde{\varphi}_2(x) = x^2 - (d_1 \varphi_1(x) + d_0 \varphi_0(x))
+\end{equation*}
+which means that
+\begin{equation*}
+\begin{cases}
+    \left<x^2, \varphi_1 \right> - d_1 \left< \varphi_1, \varphi_1 \right> - d_0 \left< \varphi_0, \varphi_1 \right> = 0 \\
+    \left<x^2, \varphi_0 \right> - d_1 \left< \varphi_1, \varphi_0 \right> - d_0 \left< \varphi_0, \varphi_0 \right> = 0 \\
+\end{cases}
+\end{equation*}
+\textit{We then normalize like above. The same procedure generates $\varphi_3, \varphi_4, ...$.}
+
+
+
+\subsection{Task 1}
+\textit{For $[a, b] = [-1, 1]$, $w(x) = 1$ and $\varphi_0 = 1 / \sqrt{2}$, construct $\varphi_1, \varphi_2$ and $\varphi_3$ by the above Gram-Schmidt orthogonalisation.}
+
+We start by finding $\varphi_1$. Using the method presented in equation \eqref{eq:varphi1}, we want to find $c_0$ such that
+\begin{equation*}
+    \left<x, \varphi_0 \right> - c_0 \left<\varphi_0, \varphi_0 \right> = 0
+\end{equation*}
+We use the inner product from equation \eqref{eq:gram-schmidt-inner-product}, and rewrite this as
+\begin{align*}
+    \int_{-1}^1 x \varphi_0(x) w(x) dx - c_0 \int_{-1}^1 \varphi_0(x) \varphi_0(x) w(x) dx &= 0\\
+    \int_{-1}^1 \frac{x}{\sqrt{2}} dx - c_0 \int_{-1}^1 \frac{1}{2} dx &= 0\\
+    \left[ \frac{x^2}{2 \sqrt{2}} \right]_{-1}^1 - c_0 \left[ \frac{x}{2} \right]_{-1}^1 &= 0 \\
+    0 - c_0 \left( \frac{1}{2} + \frac{1}{2} \right) &= 0 \\
+    -c_0 = 0 &\Rightarrow c_0 = 0
+\end{align*}
+From equation \eqref{eq:varphi1} we then have
+\begin{equation*}
+    \tilde{\varphi}_1 = x - c_0 \varphi_0(x) = x
+\end{equation*}
+Observe that
+\begin{equation*}
+    \norm{\tilde{\varphi}_1}_2^2 = \int_{-1}^1 \tilde{\varphi}_1(x)^2 w(x) dx = \int_{-1}^1 x^2 dx = \left[ \frac{x^3}{3} \right]_{-1}^1 = frac{1}{3} + \frac{1}{3} = \frac{2}{3}
+\end{equation*}
+Thus, we have $\varphi_1 = \sqrt{3}x / \sqrt{2}$. We can double-check this, as
+\begin{equation*}
+    \left< \varphi_1, \varphi_1 \right> = \int_{-1}^1 \varphi_1(x) \varphi_1(x) w(x) dx = \int_{-1}^1 \frac{3x^2}{2} dx = \left[ \frac{x^3}{2} \right]_{-1}^1 = \frac{1}{2} + \frac{1}{2} = 1
+\end{equation*}
+
+From the instructions, for $\varphi_2$ we want $d_0$ and $d_1$ such that
+\begin{align*}
+    \tilde{\varphi}_2 = x^2 - d_1 \varphi_1(x) - d_0 \varphi_0(x) \\
+    \left<x^2, \varphi_1 \right> - d_1 \left< \varphi_1, \varphi_1 \right> - d_0 \left< \varphi_0, \varphi_1 \right> = 0 \\
+    \left<x^2, \varphi_0 \right> - d_1 \left< \varphi_1, \varphi_0 \right> - d_0 \left< \varphi_0, \varphi_0 \right> = 0 \\
+\end{align*}
+We start by looking at the second equation, and use the polynomial definitions in \eqref{eq:gram-schmidt-definition} to calculate
+\begin{align*}
+    \left<x^2, \varphi_1 \right> - d_1 \left< \varphi_1, \varphi_1 \right> - d_0 \left< \varphi_0, \varphi_1 \right> &= 0 \\
+    \int_{-1}^1 x^2 \varphi_1(x) w(x) dx - d_1 * 1 - d_0 * 0 dx &= 0 \\
+    \int_{-1}^1 \frac{\sqrt{3} x^3}{\sqrt{2}} dx - d_1 &= 0 \\
+    \frac{\sqrt{3}}{4\sqrt{2}} \left[ x^4 \right]_{-1}^1 &= d_1 \\
+    \frac{\sqrt{3}}{4\sqrt{2}} (1 - 1) = 0 &= d_1
+\end{align*}
+We do the same for the second equation:
+\begin{align*}
+    \left<x^2, \varphi_0 \right> - d_1 \left< \varphi_1, \varphi_0 \right> - d_0 \left< \varphi_0, \varphi_0 \right> = 0 \\
+    \int_{-1}^1 x^2 \varphi_0(x) w(x) dx - d_1 * 0 - d_0 * 1 &= 0 \\
+    \int_{-1}^1 \frac{x^2}{\sqrt{2}} dx &= d_0 \\
+    \frac{1}{3 \sqrt{2}}\left[ x^3 \right]_{-1}^1 &= d_0 \\
+    \frac{1}{3 \sqrt{2}} (1 + 1) = \frac{\sqrt{2}}{3} &= d_0 \\
+\end{align*}
+We thus have $\tilde{\varphi}_2 = x^2 - \frac{1}{3}$. To find $\varphi_2$, we look at
+\begin{align*}
+    \norm{\tilde{\varphi}_2}_2^2 &= \int_{-1}^1 \tilde{\varphi}_2(x)^2 w(x) dx
+    = \int_{-1}^1 x^4 - \frac{2}{3}x^2 + \frac{1}{9} dx \\
+    &= \left[ \frac{1}{5}x^5 - \frac{2}{9} x^3 + \frac{x}{9} \right]_{-1}^1 
+    =  \frac{1}{5} - \frac{2}{9} + \frac{1}{9} + \frac{1}{5} - \frac{2}{9} + \frac{1}{9} \\
+    &= \frac{2}{5} - \frac{2}{9} = \frac{8}{45}
+\end{align*}
+We thus have $\varphi_2(x) = \frac{3\sqrt{5}}{2\sqrt{2}} x^2 - \frac{\sqrt{5}}{2\sqrt{2}}$. We can double-check this:
+\begin{align*}
+    \left< \varphi_2, \varphi_2 \right> &= \int_{-1}^1 \varphi_2(x)^2 w(x) dx = \int_{-1}^1 \frac{45}{8} x^4 -\frac{15}{4}x^2 + \frac{5}{8} \\
+    &= \left[ \frac{9}{8} x^5 - \frac{5}{4} x^3 + \frac{5}{8} x \right]_{-1}^1 \\
+    &= 2\left( \frac{9}{8} - \frac{5}{4} + \frac{5}{8} \right) = 2\frac{4}{8} = 1 \\
+\end{align*}
+
+We expand the instructions, and see that for $\varphi_3$ we want to find $e_0, e_1$ and $e_2$ such that
+\begin{align*}
+    \tilde{\varphi}_3 = x^3 - e_2 \varphi_2(x) - e_1 \varphi_1(x) - e_0 \varphi_0(x) \\
+    \left<x^3, \varphi_2 \right> - e_2 \left< \varphi_2, \varphi_2 \right> - e_1 \left< \varphi_1, \varphi_2 \right> - e_0 \left< \varphi_0, \varphi_2 \right> = 0 \\
+    \left<x^3, \varphi_1 \right> - e_2 \left< \varphi_2, \varphi_1 \right> - e_1 \left< \varphi_1, \varphi_1 \right> - e_0 \left< \varphi_0, \varphi_1 \right> = 0 \\
+    \left<x^2, \varphi_0 \right> - e_2 \left< \varphi_2, \varphi_0 \right> - e_1 \left< \varphi_1, \varphi_0 \right> - e_0 \left< \varphi_0, \varphi_0 \right> = 0 \\
+\end{align*}
+We start with the second equation and use the polynomial definitions in \eqref{eq:gram-schmidt-definition} to calculate
+\begin{align*}
+    \left<x^3, \varphi_2 \right> - e_2 \left< \varphi_2, \varphi_2 \right> - e_1 \left< \varphi_1, \varphi_2 \right> - e_0 \left< \varphi_0, \varphi_2 \right> &= 0 \\
+    \int_{-1}^1 x^3 \varphi_2(x) w(x) dx - e_2 * 1 - e_1 * 0 - e_0 * 0 &= 0 \\
+    \int_{-1}^1 \frac{3\sqrt{5}}{2\sqrt{2}} x^5 - \frac{\sqrt{5}}{2\sqrt{2}} x^3 dx &= e_2 \\
+    \left[ \frac{\sqrt{5}}{4\sqrt{2}} x^6 - \frac{\sqrt{5}}{8\sqrt{2}} x^4 \right]_{-1}^1 &= e_2 \\
+    (\frac{\sqrt{5}}{4\sqrt{2}} - \frac{\sqrt{5}}{8\sqrt{2}}) - (\frac{\sqrt{5}}{4\sqrt{2}} - \frac{\sqrt{5}}{8\sqrt{2}}) = 0 &= e_2 \\
+\end{align*}
+We do the same for the third equation:
+\begin{align*}
+    \left<x^3, \varphi_1 \right> - e_2 \left< \varphi_2, \varphi_1 \right> - e_1 \left< \varphi_1, \varphi_1 \right> - e_0 \left< \varphi_0, \varphi_1 \right> = 0 \\
+    \int_{-1}^1 x^3 \varphi_1(x) w(x) dx - e_2 * 0 - e_1 * 1 - e_0 * 0 &= 0 \\
+    \int_{-1}^1 \frac{\sqrt{3}}{\sqrt{2}} x^4 dx = \left[ \frac{\sqrt{3}}{5\sqrt{2}} x^5 \right]_{-1}^1 &= e_1 \\
+    \frac{\sqrt{3}}{5\sqrt{2}} + \frac{\sqrt{3}}{5\sqrt{2}} = \frac{\sqrt{6}}{5} &= e_1
+\end{align*}
+And for the last equation:
+\begin{align*}
+    \left<x^2, \varphi_0 \right> - e_2 \left< \varphi_2, \varphi_0 \right> - e_1 \left< \varphi_1, \varphi_0 \right> - e_0 \left< \varphi_0, \varphi_0 \right> &= 0 \\
+    \int_{-1}^1 x^3 \varphi_0(x) w(x) dx - e_2 * 0 - e_1 * 0 - e_0 * 1 &= 0 \\
+    \int_{-1}^1 \frac{x^3}{\sqrt{2}} dx = \left[ \frac{x^4}{4\sqrt{2}} \right]_{-1}^1 &= e_0 \\
+    \frac{x^4}{4\sqrt{2}} - \frac{x^4}{4\sqrt{2}} = 0 &= e_0
+\end{align*}
+We then have $\tilde{\varphi_3}(x) = x^3 - \frac{\sqrt{6}}{5}\frac{\sqrt{3}}{\sqrt{2}} x = x^3 - \frac{3}{5}$. To find $\varphi_3$, we look at
+\begin{align*}
+    \norm{\tilde{\varphi}_3}^2 &= \int_{-1}^1 \tilde{\varphi}_3(x)^2 w(x) dx = \int_{-1}^1 x^6 - \frac{6}{5}x^3 + \frac{9}{25} dx \\
+    &= \left[ \frac{1}{7} x^{7} - \frac{3}{10} x^4 + \frac{9}{25}x \right]_{-1}^1 \\
+    &= \frac{1}{7} - \frac{3}{10} + \frac{9}{25} + \frac{1}{7} + \frac{3}{10} + \frac{9}{25} = \frac{176}{175}
+\end{align*}
+We thus have $\varphi_3(x) = \frac{5\sqrt{77}}{44} x^3 - \frac{3\sqrt{77}}{44}$. We can double-check this as well:
+\begin{align*}
+    \left< \varphi_3, \varphi_3 \right> &= \int_{-1}^1 \varphi_3(x)^2 w(x) dx = \int_{-1}^1 \frac{175}{176} x^6 - \frac{105}{88} x^3 + \frac{63}{176} \\
+    &= \left[ \frac{25}{176} x^{7} - \frac{105}{352} x^4 + \frac{63}{176} x \right]_{-1}^1 \\
+    &= \frac{25}{176} - \frac{105}{352} + \frac{63}{176} + \frac{25}{176} + \frac{105}{352} + \frac{63}{176} = 1
+\end{align*}
+
+To conclude, we found
+\begin{align*}
+    \varphi_0(x) &= \frac{1}{\sqrt{2}} \\
+    \varphi_1(x) &= \frac{\sqrt{3}}{\sqrt{2}} x\\
+    \varphi_2(x) &= \frac{3\sqrt{5}}{2\sqrt{2}} x^2 - \frac{\sqrt{5}}{2\sqrt{2}} \\
+    \varphi_3(x) &= \frac{5\sqrt{77}}{44} x^3 - \frac{3\sqrt{77}}{44}
+\end{align*}
