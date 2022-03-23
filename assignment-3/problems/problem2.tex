@@ -1,1 +1,70 @@
 \section{Problem 2}
+\textit{For a weight function $w(x) = \frac{1}{\sqrt{1 - x^2}}$ on $x \in (-1, 1)$, and for given any small $\epsilon > 0$ and any large $M > 0$, construct such a function $f \in C[-1, 1]$, satisfying the following inequalities:}
+\begin{equation}
+\label{eq:3.2-target}
+    \norm{f}_2 < \epsilon, \quad \norm{f}_\infty > M,
+\end{equation}
+\textit{where}
+\begin{equation}
+\label{eq:3.2-2norm}
+    \norm{f}_2 := \left( \int_{-1}^1 w(x) \abs{f(x)}^2 dx \right)^{1/2}
+\end{equation}
+
+Note first the definition of $\norm{f}_\infty$:
+\begin{equation}
+\label{eq:3.2-inftynorm}
+    \norm{f}_\infty := \sup \left\{ \abs{f(x)} : x \in S \right\}
+\end{equation}
+where $S$ is the domain, in this case $S = (-1, 1)$.
+
+Observe that we can combine \eqref{eq:3.2-target} and \eqref{eq:3.2-2norm} to rewrite the 2-norm constraint:
+\begin{equation}
+\label{eq:3.2-rewrite}
+    \norm{f}_2^2 = \int_{-1}^1 w(x) \abs{f(x)}^2 dx = \int_{-1}^1 \frac{1}{\sqrt{1 - x^2}} \abs{f(x)}^2 dx < \epsilon^2
+\end{equation}
+
+From this, we can see that the simplest way to construct a function $f$ which satisfies these constraints is to construct one which satisfies
+\begin{equation*}
+    w(x) \abs{f(x)}^2 = \frac{1}{\sqrt{1 - x^2}} \abs{f(x)}^2 = g(x),
+\end{equation*}
+i.e. that $\abs{f(x)}^2 = g(x) \sqrt{1 - x^2}$. This means that $f(x) = \sqrt{g(x)} \left(1 - x^2 \right)^{1/4}$. Observe that $\left(1 - x^2 \right)^{1/4} = 1$ when $x = 0$. If we can design $g$ such that $\sqrt{g(0)} > M$, then this assures $f(0) = \sqrt{g(0)} > M$, thus satisfies $\norm{f}_\infty > M$. We let $g$ be defined by
+\begin{equation*}
+    g(x) = \frac{2M^2}{1 + c^2 x^2},
+\end{equation*}
+where $c \in \mathbb{R}$ is a constant. We then have
+\begin{equation*}
+    f(x) = \sqrt{g(x)} \left(1 - x^2 \right)^{1/4} = \frac{\sqrt{2} M \left(1 - x^2 \right)^{1/4}}{\sqrt{1 + c^2 x^2}}
+\end{equation*}
+Observe that
+\begin{equation*}
+    f(0) = \frac{\sqrt{2} M \left(1 - 0^2 \right)^{1/4}}{\sqrt{1 + c^2 0^2}} = \frac{\sqrt{2} M}{\sqrt{1}} = \sqrt{2} M > M
+\end{equation*}
+It therefore satisfies $\norm{f}_\infty > M$. Observe further that $\abs{f} = f$ for $x \in (-1, 1)$, and
+\begin{align*}
+    \norm{f}_2^2 &= \int_{-1}^1 w(x) \abs{f(x)}^2 dx \\
+    &= \int_{-1}^1 \frac{1}{\sqrt{1 - x^2}} \left(\frac{\sqrt{2} M \left(1 - x^2 \right)^{1/4}}{\sqrt{1 + c^2 x^2}} \right)^2 dx\\
+    &= \int_{-1}^1 \frac{1}{\sqrt{1 - x^2}} \frac{2 M^2 \sqrt{1 - x^2}}{1 + c^2 x^2} dx \\
+    &= \int_{-1}^1 \frac{2 M^2}{1 + c^2 x^2} dx \\
+    &= 2M^2 \int_{-1}^1 \frac{1}{1 + (cx)^2} dx \\
+\end{align*}
+Using integration by substitution with $u = cx$ and $\frac{du}{dx} = c$, we get
+\begin{equation*}
+    \int \frac{1}{1 + (cx)^2} dx = \int \frac{1}{1 + u^2} \frac{1}{c} du = \frac{1}{c} \int \frac{1}{1 + u^2} du = \frac{arctan(u)}{c} + C = \frac{arctan(cx)}{c} + C
+\end{equation*}
+We use this in the calculations above, and get
+\begin{align*}
+    \norm{f}_2^2 &= 2M^2 \int_{-1}^1 \frac{1}{1 + (cx)^2} dx \\
+    &= \frac{2M^2}{c} \left[ arctan(cx) \right]_{-1}^1 \\
+    &= \frac{2M^2}{c} \left( arctan(c) - arctan(-c) \right) \\
+    &= \frac{4M^2 arctan(c)}{c}
+\end{align*}
+It follows from \eqref{eq:3.2-rewrite} that
+\begin{align*}
+    \norm{f}_2^2 &< \epsilon^2 \\
+    \frac{4M^2 arctan(c)}{c} &< \epsilon^2 \\
+    \frac{arctan(c)}{c} &< \frac{\epsilon^2}{4M^2}
+\end{align*}
+Because $\lim_{c \to \infty} \frac{arctan(c)}{c} = 0$, there exists a (possibly large) $c$ such that $\frac{arctan(c)}{c} < \frac{\epsilon^2}{4M^2}$ for any $\epsilon > 0$ and $M > 0$. By selecting one such large $c$, we can construct a function $f$ satisfying \eqref{eq:3.2-target} for any $\epsilon > 0$ and $M > 0$:
+\begin{equation*}
+    f(x) = \frac{\sqrt{2} M \left( 1 - x^2 \right)^\frac{1}{4}}{\sqrt{1 + c^2 x^2}}
+\end{equation*}
