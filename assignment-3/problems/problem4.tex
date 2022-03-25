@@ -1,0 +1,232 @@
+\section{Problem 4}
+\textit{Exercises from Süli and Mayers\footnote{Süli, E and Mayers, D.F. (2003). \textit{An Introduction to Numerical Analysis.}}.}
+
+\subsection{Exercise 6.5}
+\textit{Let $n \ge 1$. Suppose that $x_i,\ i = 0, 1, ..., n$ are distinct real numbers, and $y_i,\ u_i,\ i = 0, 1, ..., n$ are real numbers. Suppose, further, that there exists $p_{2n+1} \in P_{2n+1}$ such that $p_{2n+1} (x_i) = y_i$ for all $i = 0, 1, ..., n$, and $p''_{2n+1} (x_i) = u_i,\ i = 0, 1, ..., n$. Attempt to prove that $p_{2n+1}$ is the unique polynomial with these properties, by adapting the uniqueness proofs in Sections 6.2 and 6.4, using Rolle's Theorem: explain where the proofs fail.}
+
+To prove uniqueness, assume there exists a $q_{2n+1} \in P_{2n+1}$, $q_{2n+1} \ne p_{2n+1}$, such that $q_{2n+1}(x_i) = y_i$ and $q''_{2n+1}(x_i) = u_i$ for all $i = 1, 2, ..., n$. Note that, according to the uniqueness proof in 6.2, $p_{2n+1} - q_{2n+1} \in P_{2n+1}$. Let $r(x) = q_{2n+1} - p_{2n+1}$. Because $q_{2n+1}(x_i) = p_{2n+1}(x_i) = y_i$, we have $r(x_i) = 0$ for all $i = 1, 2, ..., n$.
+
+By Rolle's theorem, $\frac{d}{dx} r$ has $n$ zeroes $z'_i$, where $x_i < z'_i < x_{i+1}$. By applying Rolle's theorem once more, we see that $\frac{d^2}{dx^2} r$ has $n - 1$ zeroes $z''_i$, where $z'_i < z''_i < z'_{i+1}$. Because $q_{2n+1}(x_i) = p_{2n+1}(x_i) = u_i$, we also know that $r(x_i) = 0$.
+
+To prove uniqueness, we could prove this by showing that $\frac{d^2}{dx^2} r \in P_{2n-1}$ has $2n$ zeroes, making it a constant function, and because $\frac{d^2}{dx^2} r(x_i) = 0$, then $\frac{d^2}{dx^2} r = 0$. This would again make $\frac{d}{dx} r$ a constant function, which could be used, together with $r(x_i) = 0$, to prove that $r = 0$.
+
+The proof fails before this, however, as we cannot prove that $\frac{d^2}{dx^2} r$ has $2n$ zeroes. We know that $z'_i < z''_i < z'_{i+1}$, but this gives us only $x_i < z''_i < x_{i+2}$, and no way to prove that $x_{i+1} \ne z''_i$. We can therefore not prove that $\frac{d^2}{dx^2} r$ has $n$ zeroes, and the proof fails.
+
+
+\textit{Show that there is no polynomial $p_5 \in P_5$ such that $p_5(-1) = 1$, $p_5(0) = 0$, $p_5(1) = 1$, $p''_5(-1) = 0$, $p''_5(0) = 0$, $p''_5(1) = 0$, but that if the first condition is replaced by $p_5(-1) = -1$, then there is an infinite number of such polynomials. Give an explicit expression for the general form of these polynomials.}
+
+Let $p_5(x) = a_0 + a_1 x + a_2 x^2 + a_3 x^3 + a_4 x^4 + a_5 x^5$. From the assignment, this gives us
+\begin{align}
+\label{eq:3.6.5-1}
+    a_0 - a_1 + a_2 - a_3 + a_4 - a_5 &= 1 \\
+\label{eq:3.6.5-2}
+    a_0 &= 0 \\
+\label{eq:3.6.5-3}
+    a_0 + a_1 + a_2 + a_3 + a_4 + a_5 &= 1 \\
+\label{eq:3.6.5-4}
+    2a_2 - 6a_3 + 12a_4 - 20a_5 &= 0 \\
+\label{eq:3.6.5-5}
+    2a_2 &= 0 \\
+\label{eq:3.6.5-6}
+    2a_2 + 6a_3 + 12a_4 + 20a_5 &= 0
+\end{align}
+
+From \eqref{eq:3.6.5-2} and \eqref{eq:3.6.5-5}, we get $a_0 = 0$ and $a_2 = 0$. Combining this with \eqref{eq:3.6.5-1} + \eqref{eq:3.6.5-3} gives us
+\begin{equation*}
+    a_0 - a_1 + a_2 - a_3 + a_4 - a_5 + a_0 + a_1 + a_2 + a_3 + a_4 + a_5 = a_0 + a_2 + a_4 = a_4 = 2
+\end{equation*}
+Combining \eqref{eq:3.6.5-4} + \eqref{eq:3.6.5-6} gives us 
+\begin{equation*}
+    2a_2 - 6a_3 + 12a_4 - 20a_5 + 2a_2 + 6a_3 + 12a_4 - 20a_5 = 4a_2 + 24a_4 = 48 = 0
+\end{equation*}
+which clearly does not hold. As such, there is no polynomial $p_5 \in P_5$ satisfying the given conditions.
+
+By changing to $p'(-1) = -1$, we get 
+\begin{equation}
+\label{eq:3.6.5-7}
+    a_0 - a_1 + a_2 - a_3 + a_4 - a_5 = -1 \\
+\end{equation}
+
+We still have $a_0 = 0$ and $a_2 = 0$, but combining the new equation \eqref{eq:3.6.5-7} + \eqref{eq:3.6.5-3} now gives us
+\begin{equation*}
+    a_0 - a_1 + a_2 - a_3 + a_4 - a_5 + a_0 + a_1 + a_2 + a_3 + a_4 + a_5 = a_0 + a_2 + a_4 = a_4 = 0
+\end{equation*}
+Combining \eqref{eq:3.6.5-4} + \eqref{eq:3.6.5-6} now gives us 
+\begin{equation*}
+    2a_2 - 6a_3 + 12a_4 - 20a_5 + 2a_2 + 6a_3 + 12a_4 - 20a_5 = 4a_2 + 24a_4 = 0
+\end{equation*}
+which holds.
+
+Because we have $a_0 = a_2 = a_4 = 0$, the only variables $p_5$ depends on is $a_1$, $a_3$ and $a_5$. If we let $a_5 = a$ for a randomly selected $a$, then observe that
+\begin{align*}
+    a_1 + a_3 + a_5 &= 1 \\
+    6a_3 + 20a_5 &= 0 \\
+    a_3 + a_5 &= 1 - a \\
+    6a_3 + 6a_5 &= 6 - 6a \\
+    14a_5 &= 6a - 6 \\
+    a_5 &= \frac{3a - 3}{7} \\
+    a_3 &= 1 - a - \frac{3a - 3}{7} = \frac{7 - 7a - 3a + 3}{7} = \frac{10 - 10a}{7} \\
+\end{align*}
+
+The polynomial $p_5$ can thus be written as (letting $a = 8$):
+\begin{equation*}
+    p_5(x) = \gamma \left(8x -10 x^3 + 3 x^5 \right)
+\end{equation*}
+for any chosen $\gamma$.
+
+
+
+\subsection{Exercise 6.6}
+\textit{Suppose that $n \ge 1$. The function $f$ and its derivatives of order up to and including $2n + 1$ are continuous on $[a, b]$. The points $x_i,\ i = 0, 1, ..., n$ are distinct and lie in $[a, b]$. Construct polynomials $l_0(x), h_i(x), k_i(x),\ i = 1, ..., n$ of degree $2n$ such that the polynomial}
+\begin{equation*}
+    p_{2n}(x) = l_0(x)f(x_0) + \sum_{i=1}^n \left[ h_i(x)f(x_i) + k_i(x)f'(x_i) \right]
+\end{equation*}
+\textit{satisfies the conditions}
+\begin{equation}
+\label{eq:3.6.6-cond1}
+    p_{2n}(x_i) = f(x_i), \quad i = 0, 1, ..., n
+\end{equation}
+\textit{and}
+\begin{equation}
+\label{eq:3.6.6-cond2}
+    p'_{2n}(x_i) = f'(x_i), \quad i = 1, ..., n
+\end{equation}
+
+Note first that
+\begin{equation*}
+    p'_{2n}(x) = l'_0(x) f(x_0) + \sum_{i=1}^n \left[ h'_i(x)f(x_i) + k'_i(x)f'(x_i) \right]
+\end{equation*}
+To satisfy \eqref{eq:3.6.6-cond1} for $i = 0$, note that
+\begin{equation*}
+    p_{2n}(x_0) = l_0(x_0) f(x_0) + \sum_{i=1}^n \left[ h_i(x_0)f(x_i) + k_i(x_0)f'(x_i) \right] = f(x_0)
+\end{equation*}
+If we can set the sum equal to 0 for $i = 0$, then we get
+\begin{align*}
+    l_0 (x_0) f(x_0) &= f(x_0) \\
+    l_0 (x_0) &= 1
+\end{align*}
+Likewise, for $i > 0$, we want $l_0(x_i) = 0$ and $l'_0(x_i) = 0$. This gives us
+\begin{align*}
+    l_0(x_i) &= \begin{cases}
+        1, & i = 0 \\
+        0, & i > 0 \\
+    \end{cases} \\
+    l'_0(x_i) &= 0, \quad i = 1, ..., n \\
+\end{align*}
+
+To get a polynomial of degree $2n$, we can write this as
+\begin{equation*}
+    l_0(x) = \prod_{i = 1}^n \frac{\left( x - x_i \right)^2}{\left( x_0 - x_i \right)^2}
+\end{equation*}
+where
+\begin{align*}
+    l'_0(x) &= \sum_{j = 1}^n \frac{2}{x - x_j} l_0(x) \\
+    l'_0(x_i) &= \sum_{j = 1}^n \frac{2}{x - x_j} l_0(x_i) = \sum_{j = 1}^n \frac{2}{x - x_j} 0 = 0, \quad i = 1, ..., n
+\end{align*}
+
+To get the right values from the sum in the assignment, we want $h_i(x)$ and $k_i(x)$ to have the following attributes:
+\begin{align*}
+    h_i(x_j) &= \begin{cases}
+        0, & i \ne j \\
+        1, & i = j
+    \end{cases}, \quad j = 0, 1, ... n \\
+    h'_i(x_j) &= 0, \quad j = 1, ..., n \\
+    k_i(x_j) &= 0, \quad j = 0, 1, ..., n \\
+    k'_i(x_j) &= \begin{cases}
+        0, & i \ne j \\
+        1, & i = j
+    \end{cases}, \quad j = 1, ..., n \\
+\end{align*}
+
+Based on this, we can use the Hermite Interpolation Theorem to help us find $h_i(x)$ and $k_i(x)$. For the theorem, let $i = 1, ..., n$, $y_i = f(x_i)$ and $z_i = f'(x_i)$. From the theorem, we can then write
+\begin{align*}
+    L_i(x) &= \prod_{j = 1, j \ne k}^n \frac{x - x_j}{x_i - x_j} \\
+    H_i(x) &= \left[ L_i(x) \right]^2 (1 - 2L'_k(x_i)(x - x_i)) \\
+    K_i(x) &= \left[ L_i(x) \right]^2 (x - x_i) \\
+\end{align*}
+Note that $L_i(x_i) = 1$ and $L_i(x_j) = 0,\ j \ne i$. The theorem then states that $p_{2n-1}(x) = \sum_{k=1}^n \left[ H_k(x) f(x_k) + K_k(x) f'(x_k) \right]$, which is pretty close to what we want. We have the correct properties, but need $h_i(x_0) = k_i(x_0) = 0$. We therefore multiply the result by $\frac{x - x_0}{x_i - x_0}$, to ensure this property is satisfied. Note that we also change the $2L'_i(x)$-term of $h_i$:
+\begin{align*}
+    h_i(x) &= \left[ L_i(x) \right]^2 (1 - \alpha(x - x_i)) \frac{x - x_0}{x_i - x_0} \\
+    k_i(x) &= \left[ L_i(x) \right]^2 (x - x_i) \frac{x - x_0}{x_i - x_0} \\
+\end{align*}
+We now have
+\begin{align*}
+    h_i(x_0) &= \left[ L_i(x_0) \right]^2 (1 - \alpha(x_0 - x_i)) \frac{x_0 - x_0}{x_i - x_0} = 0 \\
+    h_i(x_i) &= \left[ L_i(x_i) \right]^2 (1 - \alpha(x_i - x_i)) \frac{x_i - x_0}{x_i - x_0} = \left[ L_i(x_i) \right]^2 = 1 \\
+    h_i(x_j) &= \left[ L_i(x_j) \right]^2 (1 - \alpha(x_j - x_i)) \frac{x - x_0}{x_i - x_0} = 0, \quad j \ne i \\
+    h'_i(x) &= 2 L_i(x) L'_i(x) (1 - \alpha(x - x_i)) \frac{x - x_0}{x_i - x_0} - \left[ L_i(x) \right]^2 \alpha \frac{x - x_0}{x_i - x_0} + \left[ L_i(x) \right]^2 (1 - \alpha(x - x_i)) \frac{1}{x_i - x_0} \\
+    h'_i(x_i) &= 2 * 1 * L'_i(x_i) * 1  * 1 - 1 * \alpha * 1 + 1 * 1 * \frac{1}{x_i - x_0} = 2L'_i(x_i) - \alpha + \frac{1}{x_i - x_0} \\
+    h'_i(x_j) &= 2 * 0 *  L'_i(x_j) (1 - \alpha(x_k - x_i)) \frac{x_j - x_0}{x_i - x_0} - 0 * \alpha \frac{x_j - x_0}{x_i - x_0} + 0 * (1 - \alpha(x_j - x_i)) \frac{1}{x_i - x_0} = 0 \\
+\end{align*}
+
+Note that in order to get $h'_i(x_i) = 0$, we set $\alpha = 2L'_i(x_i) + \frac{1}{x_i - x_0}$. We thus have
+\begin{equation*}
+    h_i(x) = \left[ L_i(x) \right]^2 \left[1 - \left(2L'_i(x_i) + \frac{1}{x_i - x_0}\right)(x - x_i)\right] \frac{x - x_0}{x_i - x_0}
+\end{equation*}
+
+We also have 
+\begin{align*}
+    k_i(x_0) &= \left[ L_i(x_0) \right]^2 (x_0 - x_i) \frac{x_0 - x_0}{x_i - x_0} = 0 \\
+    k_i(x_i) &= \left[ L_i(x_i) \right]^2 (x_i - x_i) \frac{x_i - x_0}{x_i - x_0} = 0 \\
+    k_i(x_j) &= \left[ L_i(x_j) \right]^2 (x_j - x_i) \frac{x_j - x_0}{x_i - x_0} = 0, \quad j = i\\
+    k'_i(x) &= 2 L_i(x) L'_i(x) (x - x_i) \frac{x - x_0}{x_i - x_0} + \left[ L_i(x) \right]^2 \frac{x - x_0}{x_i - x_0} + \left[ L_i(x) \right]^2 \frac{x - x_i}{x_i - x_0} \\
+    k'_i(x_i) &= 2 * 1 * L'_i(x_i) * 0 * 1 + 1 * 1 + 1 * 0 = 1 \\
+    k'_i(x_j) &= 0 + 0 + 0 = 0 \\
+\end{align*}
+
+We thus have
+\begin{align*}
+    l_0(x) &= \prod_{i = 1}^n \frac{\left( x - x_i \right)^2}{\left( x_0 - x_i \right)^2} = \left[ L_0(x) \right]^2\\
+    h_i(x) &= \left[ L_i(x) \right]^2 \left[1 - \left(2L'_i(x_i) + \frac{1}{x_i - x_0}\right)(x - x_i)\right] \frac{x - x_0}{x_i - x_0} \\
+    k_i(x) &= \left[ L_i(x) \right]^2 (x - x_i) \frac{x - x_0}{x_i - x_0} \\
+\end{align*}
+
+
+
+\textit{Show also that for each value of $x \in [a, b]$ there is a number $\eta$, depending on $x$, such that}
+\begin{equation*}
+    f(x) - p_{2n}(x) = \frac{(x - x_0) \prod_{i = 1}^n (x - x_i)^2}{(2n + 1)!} f^{(2n+1)}(\eta)
+\end{equation*}
+If $x = x_i$, $i = 0, 1, ..., n$, then this equation is reduced to $f(x) - p_{2n}(x) = 0 = 0 * f^{(2n+1)}(\eta)$, which obviously holds for all $\eta$.
+
+We therefore want to look at where $x \ne x_i$. Based on the proof of Theorem 6.2 and 6.4, we define $\varphi$ as a function on $[a, b]$:
+\begin{equation*}
+    \varphi(t) = f(t) - p_{2n}(t) - \frac{f(x) - p_{2n}(x)}{\pi(x)^2} \pi(t)^2
+\end{equation*}
+where
+\begin{equation*}
+    \pi(x) = (x - x_0) \prod_{i = 1}^n (x - x_i)^2
+\end{equation*}
+We thus have
+\begin{equation*}
+    \varphi(t) = f(t) - p_{2n}(t) - \frac{f^{(2n+1)}(\eta)}{\pi(x) * (2n + 1)!} \pi(t)^2
+\end{equation*}
+Observe that for $f(x_i) = p_{2n}(x_i) = \pi(x_i) = 0$, thus $\varphi(x_i) = 0$. Observe also that if $x \ne x_i$, then $\varphi(x) = 0$. Thus $\varphi(t)$ vanishes in $n + 2$ places: $x_0, x_1, ..., x_n, x$. By Rolle's Theorem, we have that $\varphi'(t)$ vanishes at $n + 1$ places, lying between the pairs in $x_0, x_1, ..., x_n, x$. Note also that $f'(x_i) - p'_{2n}(x_i) = \pi'(x_i) = 0$ for $i = 1, ..., n$, thus meaning that $\varphi'(t)$ also vanished in all $n$ points $x_1, ..., x_n$. This means that $\varphi'(t)$ vanishes in $2n + 1$ points. 
+
+Following the pattern shown in Theorem 6.4, we can repeatedly apply Rolle's Theorem. Observe that $\varphi''(t)$ vanishes in $2n$ points, and so on, meaning that $\varphi^{(p)}$ vanishes in $2n + 2 - p$ places. By letting $p = 2n + 1$, we see that $\varphi^{(2n + 1)}$ vanishes in at least one place, i.e. $\varphi^{(2n+1)}(\eta) = 0$ for some $\eta \in [a, b]$.
+
+Observe, at the same time, that $p_{2n} \in P_{2n}$, thus $p_{2n}^{(2n + 1)} = 0$. This gives
+\begin{align*}
+    \varphi^{(2n + 1)}(t) &= f^{(2n + 1)}(t) - \frac{f^{(2n+1)}(\eta)}{\pi(x) * (2n + 1)!} \left[\pi(t)^2 \right]^{(2n+1)} \\
+    \varphi^{(2n + 1)}(\eta) &= f^{(2n + 1)}(\eta) \left\{ 1 - \frac{\left[\pi(\eta)^2 \right]^{(2n+1)} }{\pi(x) * (2n + 1)!} \right\} \\
+\end{align*}
+We know that $\varphi^{(2n + 1)}(\eta) = 0$ for some $\eta \in [a, b]$. It is safe to assume that $\left\{ 1 - \frac{\left[\pi(\eta)^2 \right]^{(2n+1)} }{\pi(x) * (2n + 1)!} \right\} \ne 0$. Thus we have
+\begin{equation*}
+    \varphi^{(2n + 1)}(\eta) = 0 \ \Rightarrow \ f^{(2n + 1)}(\eta) = 0
+\end{equation*}
+for some $\eta \in [a, b]$.
+
+
+\subsection{Exercise 7.7}
+
+
+\subsection{Exercise 7.13}
+
+
+\subsection{Exercise 8.9}
+
+
+\subsection{Exercise 12.1}
+
+
+\subsection{Exercise 12.3}
